@@ -3916,7 +3916,7 @@
 											"top": 911,
 											"width": 370.30322265625,
 											"height": 13,
-											"text": "ConcoleView"
+											"text": "ConsoleView"
 										},
 										{
 											"_type": "LabelView",
@@ -4448,7 +4448,7 @@
 											"model": {
 												"$ref": "AAAAAAGTt6gMLA7uvvM="
 											},
-											"font": "Arial;13;0",
+											"font": "Arial;13;2",
 											"left": 861,
 											"top": 509,
 											"width": 370.30322265625,
@@ -4465,7 +4465,7 @@
 											"model": {
 												"$ref": "AAAAAAGTt6goIQ8YJUw="
 											},
-											"font": "Arial;13;0",
+											"font": "Arial;13;2",
 											"left": 861,
 											"top": 524,
 											"width": 370.30322265625,
@@ -4482,7 +4482,7 @@
 											"model": {
 												"$ref": "AAAAAAGTt6gv5Q9Fx7g="
 											},
-											"font": "Arial;13;0",
+											"font": "Arial;13;2",
 											"left": 861,
 											"top": 539,
 											"width": 370.30322265625,
@@ -4499,7 +4499,7 @@
 											"model": {
 												"$ref": "AAAAAAGTt6g5EA9vtt8="
 											},
-											"font": "Arial;13;0",
+											"font": "Arial;13;2",
 											"left": 861,
 											"top": 554,
 											"width": 370.30322265625,
@@ -4516,7 +4516,7 @@
 											"model": {
 												"$ref": "AAAAAAGTt6hCAw+ZmTI="
 											},
-											"font": "Arial;13;0",
+											"font": "Arial;13;2",
 											"left": 861,
 											"top": 569,
 											"width": 370.30322265625,
@@ -6297,7 +6297,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGTt4k2lfsUygs="
 							},
-							"name": "PAWN"
+							"name": "PAWN",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -6305,7 +6306,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGTt4k2lfsUygs="
 							},
-							"name": "ROOK"
+							"name": "ROOK",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -6313,7 +6315,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGTt4k2lfsUygs="
 							},
-							"name": "KNIGHT"
+							"name": "KNIGHT",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -6321,7 +6324,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGTt4k2lfsUygs="
 							},
-							"name": "BISHOP"
+							"name": "BISHOP",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -6329,7 +6333,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGTt4k2lfsUygs="
 							},
-							"name": "QUEEN"
+							"name": "QUEEN",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -6337,7 +6342,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGTt4k2lfsUygs="
 							},
-							"name": "KING"
+							"name": "KING",
+							"type": ""
 						}
 					]
 				},
@@ -6356,7 +6362,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGTt4qLS/tpGzY="
 							},
-							"name": "WHITE"
+							"name": "WHITE",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -6364,7 +6371,8 @@
 							"_parent": {
 								"$ref": "AAAAAAGTt4qLS/tpGzY="
 							},
-							"name": "BLACK"
+							"name": "BLACK",
+							"type": ""
 						}
 					]
 				},
@@ -6927,7 +6935,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "ConcoleView",
+					"name": "ConsoleView",
 					"ownedElements": [
 						{
 							"_type": "UMLGeneralization",
@@ -7161,7 +7169,8 @@
 									"type": "void",
 									"direction": "return"
 								}
-							]
+							],
+							"isAbstract": true
 						},
 						{
 							"_type": "UMLOperation",
@@ -7198,7 +7207,8 @@
 									"type": "void",
 									"direction": "return"
 								}
-							]
+							],
+							"isAbstract": true
 						},
 						{
 							"_type": "UMLOperation",
@@ -7257,7 +7267,8 @@
 									"type": "void",
 									"direction": "return"
 								}
-							]
+							],
+							"isAbstract": true
 						},
 						{
 							"_type": "UMLOperation",
@@ -7285,7 +7296,8 @@
 									"type": "void",
 									"direction": "return"
 								}
-							]
+							],
+							"isAbstract": true
 						},
 						{
 							"_type": "UMLOperation",
@@ -7331,7 +7343,8 @@
 									"type": "T",
 									"direction": "return"
 								}
-							]
+							],
+							"isAbstract": true
 						}
 					],
 					"isAbstract": true
