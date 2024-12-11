@@ -29,6 +29,7 @@ méthode `displayMessage(String))`.
 Implémentation de la détection de l’ échec et mat et des matchs nuls par pat ou
 impossibilité de mater.
 
+
 ## Non-objectifs
 - L’utilisateur ne pourra pas jouer contre le programme. L’utilisateur doit bouger les pièces
   des deux côtés.
@@ -79,3 +80,9 @@ méthodes de l’interface `ChessView` pour contrôler l’interface graphique.
 déplacements du jeu (on ne veut pas des tests à coup de comparaisons de types !)
 - Ne rien coder dans le package fourni (package _chess_). Faire un nouveau package (nous
 recommandons `engine`) pour le code que vous créez.
+
+## Schéma UML incomplet
+![diagramme](images/Lab08_Jeu_d_echecs_diagramme_classe.jpg)
+
+## Diagramme de séquence explicatif
+![séquence](images/Lab08_Jeu_d_echecs_diagramme_sequence.png)
