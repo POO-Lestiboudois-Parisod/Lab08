@@ -86,3 +86,8 @@ recommandons `engine`) pour le code que vous créez.
 
 ## Diagramme de séquence explicatif
 ![séquence](images/Lab08_Jeu_d_echecs_diagramme_sequence.png)
+
+## Schema UML complété
+
+![schéma_UML](images/schema_uml.png)
+
