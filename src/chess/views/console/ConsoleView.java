@@ -1,4 +1,4 @@
-package chess;
+package chess.views.console;
 
 import chess.ChessController;
 import chess.PieceType;

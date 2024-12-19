@@ -1,9 +1,9 @@
-package chess;
+package chess.views.gui;
 
 import chess.ChessController;
 import chess.PieceType;
 import chess.PlayerColor;
-import chess.assets.GuiAssets;
+import chess.assets.*;
 import chess.views.BaseView;
 import chess.views.DrawableResource;
 

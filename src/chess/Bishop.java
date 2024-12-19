@@ -1,7 +1,15 @@
 package chess;
 
+import java.awt.*;
+
 public class Bishop extends Piece {
-    void Main (Strings[] args) {
-        System.out.println("Hello, World!");
+
+    public Bishop(PlayerColor color, PieceType type) {
+        super(color, type);
     }
-};
+
+    @Override
+    public boolean canMove(){
+        return false; //TODO
+    }
+}

@@ -1,7 +1,11 @@
 package chess;
 
 public class Queen extends Piece {
-    void Main (Strings[] args) {
-        System.out.println("Hello, World!");
+    public Queen(PlayerColor color, PieceType type) {
+        super(color, type);
+    }
+    @Override
+    public boolean canMove() {
+        return false;//TODO
     }
 };

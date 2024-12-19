@@ -1,4 +1,4 @@
-package chess;
+package chess.assets;
 
 import chess.PieceType;
 import chess.PlayerColor;

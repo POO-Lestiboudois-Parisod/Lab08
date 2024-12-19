@@ -1,7 +1,12 @@
 package chess;
 
 public class Knight extends Piece {
-    void Main (Strings[] args) {
-        System.out.println("Hello, World!");
+    public Knight(PlayerColor color, PieceType type) {
+        super(color, type);
+    }
+
+    @Override
+    public boolean canMove() {
+        return false;//TODO
     }
 };

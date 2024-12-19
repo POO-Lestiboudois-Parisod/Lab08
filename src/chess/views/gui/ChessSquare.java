@@ -1,4 +1,4 @@
-package chess;
+package chess.views.gui;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;

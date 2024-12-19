@@ -1,7 +1,15 @@
 package chess;
 
+import java.awt.*;
+
 public class King extends Piece {
-    void Main (Strings[] args) {
-        System.out.println("Hello, World!");
+
+    public King(PlayerColor color, PieceType type) {
+        super(color, type);
+    }
+
+    @Override
+    public boolean canMove() {
+        return false;//TODO
     }
 };
