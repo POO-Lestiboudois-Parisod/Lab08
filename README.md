@@ -44,7 +44,7 @@ chess-starter.zip) :
 - `ChessView` est une interface permettant de représenter une interface graphique ou **vue**.
   Nous vous fournissons l’implémentation de deux vues : la vue mode graphique GUIView
   et la vue mode texte ConsoleView. Tout le code de ces vues se trouve dans les packages
-  views et assets.
+  chess.views et chess.assets.
 - `ChessController` est une interface permettant de contrôler le jeu d’échecs depuis la
   vue. Il s’agit de l’interface que vous devez implémenter dans le contrôleur.
 
