@@ -1,8 +1,8 @@
 package chess;
 
 public class Queen extends Piece {
-    public Queen(PlayerColor color, PieceType type) {
-        super(color, type);
+    public Queen(PlayerColor color, PieceType type, Square square) {
+        super(color, type, square);
     }
     @Override
     public boolean canMove() {
