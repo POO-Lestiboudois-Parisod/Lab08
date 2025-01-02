@@ -2,13 +2,8 @@ package chess;
 
 public class Bishop extends Piece {
 
-    public Bishop(PlayerColor color, PieceType type, Square square) {
-        super(color, type, square);
-    }
-
-    @Override
-    public boolean canMove() {
-        return false;//TODO
+    public Bishop(PlayerColor color, Square square) {
+        super(color, PieceType.BISHOP, square);
     }
 
     @Override
@@ -16,19 +11,19 @@ public class Bishop extends Piece {
         int deltaX = Math.abs(endX - startX);
         int deltaY = Math.abs(endY - startY);
 
-        // Vérifier le mouvement en diagonale via un énumérateur MoveType
+        // Vérifier que le mouvement est en diagonale
         if (!MoveType.Standard.DIAGONAL.isValid(deltaX, deltaY)) {
             return false;
         }
 
-        // Vérifier que le chemin est libre
+        // Vérification des obstacles
         int stepX = (endX - startX) / deltaX; // +1 ou -1
-        int stepY = (endY - startY) / deltaY;
+        int stepY = (endY - startY) / deltaY; // +1 ou -1
 
         int x = startX + stepX;
         int y = startY + stepY;
 
-        while (x != endX && y != endY) {
+        while (x != endX || y != endY) {
             if (board.getPiece(x, y) != null) {
                 return false; // Une pièce bloque le chemin
             }
@@ -36,7 +31,7 @@ public class Bishop extends Piece {
             y += stepY;
         }
 
-        // Vérifier que la destination est valide (case vide ou pièce ennemie)
+        // Vérifier que la case de destination est vide ou contient une pièce ennemie
         Piece targetPiece = board.getPiece(endX, endY);
         return targetPiece == null || targetPiece.getColor() != this.getColor();
     }

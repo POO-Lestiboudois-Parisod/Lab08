@@ -1,12 +1,23 @@
 package chess;
 
 public class Knight extends Piece {
-    public Knight(PlayerColor color, PieceType type, Square square) {
-        super(color, type, square);
+
+    public Knight(PlayerColor color, Square square) {
+        super(color, PieceType.KNIGHT, square);
     }
 
     @Override
-    public boolean canMove() {
-        return false;//TODO
+    public boolean canMove(Board board, int startX, int startY, int endX, int endY) {
+        int deltaX = Math.abs(endX - startX);
+        int deltaY = Math.abs(endY - startY);
+
+        // Vérifier que le mouvement est en forme de L
+        if (!MoveType.Standard.L_SHAPE.isValid(deltaX, deltaY)) {
+            return false;
+        }
+
+        // Vérifier que la case de destination est vide ou contient une pièce ennemie
+        Piece targetPiece = board.getPiece(endX, endY);
+        return targetPiece == null || targetPiece.getColor() != this.getColor();
     }
-};
+}
