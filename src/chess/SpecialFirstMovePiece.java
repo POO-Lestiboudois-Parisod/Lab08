@@ -7,7 +7,7 @@ abstract class SpecialFirstMovePiece extends Piece {
         return true;//TODO
     }
 
-    protected SpecialFirstMovePiece(PlayerColor color, PieceType type, Square square) {
-        super(color, type, square);
+    protected SpecialFirstMovePiece(PlayerColor color, PieceType type) {
+        super(color, type);
     }
 }

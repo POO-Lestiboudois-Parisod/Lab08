@@ -2,8 +2,8 @@ package chess;
 
 public class Queen extends Piece {
 
-    public Queen(PlayerColor color, Square square) {
-        super(color, PieceType.QUEEN, square);
+    public Queen(PlayerColor color) {
+        super(color, PieceType.QUEEN);
     }
 
     @Override

@@ -1,13 +1,11 @@
 package chess;
 
-import java.awt.*;
-
 public abstract class Piece {
     private final PlayerColor color;
-    private PieceType type;
-    private Square square;
+    private final PieceType type;
+    protected Square square;
 
-    protected Piece(PlayerColor color, PieceType type, Square square) {
+    protected Piece(PlayerColor color, PieceType type) {
         this.color = color;
         this.type = type;
     }
@@ -16,6 +14,10 @@ public abstract class Piece {
 
     public PieceType getPieceType(){
         return type;
+    }
+
+    public void setSquare(Square square){
+        this.square = square;
     }
     public Square getSquare(){
         return square;
