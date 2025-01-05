@@ -2,8 +2,8 @@ package chess;
 
 public class Bishop extends Piece {
 
-    public Bishop(PlayerColor color, Square square) {
-        super(color, PieceType.BISHOP, square);
+    public Bishop(PlayerColor color) {
+        super(color, PieceType.BISHOP);
     }
 
     @Override

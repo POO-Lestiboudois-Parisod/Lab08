@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 public class King extends SpecialFirstMovePiece implements CastlingPiece {
 
-    public King(PlayerColor color, PieceType type) {
-        super(color, type);
+    public King(PlayerColor color) {
+        super(color, PieceType.KING);
     }
 
     @Override
