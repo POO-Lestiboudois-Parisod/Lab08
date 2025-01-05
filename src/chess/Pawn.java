@@ -14,4 +14,10 @@ public class Pawn extends Piece implements PromotablePiece{
     public boolean canMove(Board board, int startX, int startY, int endX, int endY) {
         return false; // TODO
     }
+
+    @Override
+    public boolean canMove(Square square){
+        return false;
+        //TODO
+    }
 };

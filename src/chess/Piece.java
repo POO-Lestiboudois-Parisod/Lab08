@@ -11,6 +11,7 @@ public abstract class Piece {
     }
 
     public abstract boolean canMove(Board board, int startX, int startY, int endX, int endY);
+    public abstract boolean canMove(Square square);
 
     public PieceType getPieceType(){
         return type;
@@ -23,17 +24,21 @@ public abstract class Piece {
         return square;
     }
     public void move(Square square){
-        this.square = square; //todo
+
+        if(canMove(square)){
+            this.square = square;
+        }
+
     }
     public PlayerColor getColor(){
         return color;
     }
+
     public boolean isSameColor(Piece piece){
-        return color == piece.color;
+        return color.equals(piece.color);
     }
     public boolean isAttacking(Board board, Square square){
         return false; //TODO
     }
-
 
 };

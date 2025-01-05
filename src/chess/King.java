@@ -12,8 +12,14 @@ public class King extends SpecialFirstMovePiece implements CastlingPiece {
     @Override
     public boolean canMove(Board board, int startX, int startY, int endX, int endY) {
         return false;
+        //TODO
     }
 
+    @Override
+    public boolean canMove(Square square){
+        return false;
+        //TODO
+    }
     public boolean canCastle() {
         return true;//TODO
     }

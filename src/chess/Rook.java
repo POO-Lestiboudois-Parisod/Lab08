@@ -13,4 +13,9 @@ public class Rook extends SpecialFirstMovePiece implements CastlingPiece {
     public boolean canCastle(){
         return true;//TODO
     }
+
+    public boolean canMove(Square square){
+        return false;
+        //TODO
+    }
 };

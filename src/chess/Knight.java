@@ -20,4 +20,10 @@ public class Knight extends Piece {
         Piece targetPiece = board.getPiece(endX, endY);
         return targetPiece == null || targetPiece.getColor() != this.getColor();
     }
+
+    @Override
+    public boolean canMove(Square square) {
+        return false;
+        //TODO
+    }
 }
