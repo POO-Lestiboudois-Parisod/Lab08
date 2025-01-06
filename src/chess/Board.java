@@ -94,9 +94,9 @@ public class Board {
                                 board[i][j].setPiece(knight);
                             }
                             case 7: {
-                                Queen queen = new Queen(PlayerColor.WHITE);
+                                Rook rook = new Rook(PlayerColor.WHITE);
                                 board[i][j] = new Square(i, j);
-                                board[i][j].setPiece(queen);
+                                board[i][j].setPiece(rook);
                             }
                         }
                     }
@@ -146,9 +146,9 @@ public class Board {
                                 board[i][j].setPiece(knight);
                             }
                             case 7: {
-                                Queen queen = new Queen(PlayerColor.BLACK);
+                                Rook rook = new Rook(PlayerColor.BLACK);
                                 board[i][j] = new Square(i, j);
-                                board[i][j].setPiece(queen);
+                                board[i][j].setPiece(rook);
                             }
                         }
                     }
