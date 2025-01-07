@@ -1,4 +1,4 @@
-package chess;
+/*package chess;
 
 public abstract class Piece {
     private final PlayerColor color;
@@ -69,4 +69,41 @@ public abstract class Piece {
     }
 
 
-};
+};*/
+
+package chess;
+
+abstract class Piece {
+    private final PlayerColor color;
+    private final PieceType type;
+    private Square square;
+
+    protected Piece(PlayerColor color, PieceType type) {
+        this.color = color;
+        this.type = type;
+    }
+
+    public PlayerColor getColor() {
+        return color;
+    }
+
+    public PieceType getType() {
+        return type;
+    }
+
+    public Square getSquare() {
+        return square;
+    }
+
+    public void setSquare(Square square) {
+        this.square = square;
+    }
+
+    public abstract boolean canMove(Board board, Square start, Square end);
+
+    public interface MoveStrategy {
+        boolean isValid(Board board, Square start, Square end);
+
+        void execute(Board board, Square start, Square end);
+    }
+}

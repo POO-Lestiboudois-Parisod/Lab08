@@ -53,16 +53,6 @@ import java.util.List;
 
 public class King extends SpecialFirstMovePiece implements CastlingPiece {
 
-    //Selon notre modèle, canMove doit avoir comme paramètres un objet Board et quatre int, mais il serait plus judicieux
-    //(comme c'est le cas ci-dessous) d'utiliser un Board, un objet Square start et un objet Square end.TODO
-
-    @Override
-    public boolean canMove(Board board, int startX, int startY, int endX, int endY) {
-        return false;
-    }
-
-    //La méthode ci-dessus est selon moi inutile.TODO
-
     private final List<MoveStrategy> moveStrategies = new ArrayList<>();
 
     public King(PlayerColor color) {

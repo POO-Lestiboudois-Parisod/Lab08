@@ -1,4 +1,4 @@
-package chess;
+/*package chess;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -198,6 +198,48 @@ public class Board {
         }
         square.setPiece(null);
     }
+}*/
+
+
+package chess;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Board {
+
+    private static final int NB_SQUARES_PER_LINE = 8;
+    private final Square[][] board = new Square[NB_SQUARES_PER_LINE][NB_SQUARES_PER_LINE];
+
+    public Board() {
+        reset();
+    }
+
+    public Piece getPiece(int x, int y) {
+        if (x < 0 || x >= NB_SQUARES_PER_LINE || y < 0 || y >= NB_SQUARES_PER_LINE) {
+            throw new IllegalArgumentException("Les coordonnées sont hors du plateau.");
+        }
+        return board[x][y].getPiece();
+    }
+
+    public void movePiece(Piece piece, Square destination) {
+        Square currentSquare = piece.getSquare();
+        currentSquare.setPiece(null);
+        destination.setPiece(piece);
+    }
+
+    public void reset() {
+        for (int i = 0; i < NB_SQUARES_PER_LINE; ++i) {
+            for (int j = 0; j < NB_SQUARES_PER_LINE; ++j) {
+                board[i][j] = new Square(i, j);
+            }
+        }
+    }
+
+    public Square getSquare(int x, int y) {
+        if (x < 0 || x >= NB_SQUARES_PER_LINE || y < 0 || y >= NB_SQUARES_PER_LINE) {
+            throw new IllegalArgumentException("Les coordonnées sont hors du plateau.");
+        }
+        return board[x][y];
+    }
 }
-
-
