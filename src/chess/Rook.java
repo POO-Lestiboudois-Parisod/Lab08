@@ -15,7 +15,23 @@ public class Rook extends SpecialFirstMovePiece implements CastlingPiece {
     }
 
     public boolean canMove(Square square){
-        return false;
-        //TODO
+
+
+        if(square.isOccupied()){
+            if(square.getPiece().getColor().equals(this.getColor())){
+                return false;
+            }
+        }
+
+        // Calcul de la distance
+        int deltaX = Math.abs(square.getX() - this.square.getX());
+        int deltaY = Math.abs(square.getY() - this.square.getY());
+
+        if(deltaX > 0 && deltaY > 0) {
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 };

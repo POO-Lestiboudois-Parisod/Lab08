@@ -8,6 +8,10 @@ public class Bishop extends Piece {
 
     @Override
     public boolean canMove(Board board, int startX, int startY, int endX, int endY) {
+
+        super.canMove(new Square(endX, endY));
+
+
         int deltaX = Math.abs(endX - startX);
         int deltaY = Math.abs(endY - startY);
 

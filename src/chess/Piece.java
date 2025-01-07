@@ -11,7 +11,14 @@ public abstract class Piece {
     }
 
     public abstract boolean canMove(Board board, int startX, int startY, int endX, int endY);
-    public abstract boolean canMove(Square square);
+    public boolean canMove(Square square) {
+        if (square.isOccupied()) {
+            if (square.getPiece().getColor().equals(this.getColor())) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     public PieceType getPieceType(){
         return type;
@@ -40,5 +47,26 @@ public abstract class Piece {
     public boolean isAttacking(Board board, Square square){
         return false; //TODO
     }
+
+    public double distanceX(Square square){
+        int x = square.getX();
+
+        int currentX = this.square.getX();
+
+
+        // Calcul de la distance
+        return Math.abs(x - currentX);
+    }
+
+    public double distanceY(Square square){
+        int y = square.getY();
+
+        int currentY = this.square.getY();
+
+
+        // Calcul de la distance
+        return Math.abs(y - currentY);
+    }
+
 
 };

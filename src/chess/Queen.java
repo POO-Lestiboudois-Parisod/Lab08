@@ -40,7 +40,9 @@ public class Queen extends Piece {
     }
 
     public boolean canMove(Square square){
-        return false;
-        //TODO
+       if(square.isOccupied()){
+           return !square.getPiece().getColor().equals(this.getColor());
+       }
+       return true;
     }
 }

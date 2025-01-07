@@ -17,8 +17,17 @@ public class King extends SpecialFirstMovePiece implements CastlingPiece {
 
     @Override
     public boolean canMove(Square square){
-        return false;
-        //TODO
+
+        super.canMove(square);
+
+
+        // Calcul de la distance
+        double deltaX = distanceX(square);
+        double deltaY = distanceY(square);
+
+        // Le roi peut se déplacer d'une case dans n'importe quelle direction
+        return (deltaX <= Math.sqrt(2) && deltaY <= Math.sqrt(2));
+
     }
     public boolean canCastle() {
         return true;//TODO
