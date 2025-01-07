@@ -242,4 +242,18 @@ public class Board {
         }
         return board[x][y];
     }
+
+    public boolean isSquareUnderAttack(Square square, PlayerColor color) {
+        for (int i = 0; i < NB_SQUARES_PER_LINE; ++i) {
+            for (int j = 0; j < NB_SQUARES_PER_LINE; ++j) {
+                Piece piece = board[i][j].getPiece();
+                if (piece != null && piece.getColor() != color) {
+                    if (piece.canMove(this, board[i][j], square)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 }
