@@ -16,6 +16,7 @@ public class GameController implements ChessController {
     @Override
     public void start(ChessView view) {
         this.view = view;
+        view.startView();
         this.newGame();
     }
 
@@ -83,7 +84,7 @@ public class GameController implements ChessController {
     }
 
     // Classe interne pour représenter un coup
-    private static class Move {
+    public static class Move {
         private final Square from;
         private final Square to;
         private final Piece piece;
@@ -105,5 +106,9 @@ public class GameController implements ChessController {
         public Piece getPiece() {
             return piece;
         }
+    }
+
+    public Move getLastMove() {
+        return lastMove;
     }
 }

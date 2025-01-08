@@ -9,10 +9,8 @@ import java.util.List;
 public class Pawn extends SpecialFirstMovePiece implements PromotablePiece {
 
     private final int direction;
-
     private final List<MoveStrategy> moveStrategies = new ArrayList<>();
     private final PathValidator pathValidator = new DefaultPathValidator();
-
 
     public Pawn(PlayerColor color) {
         super(color, PieceType.PAWN);
@@ -121,24 +119,38 @@ public class Pawn extends SpecialFirstMovePiece implements PromotablePiece {
     private class EnPassantMove implements MoveStrategy {
         @Override
         public boolean isValid(Board board, Square start, Square end) {
+            GameController.Move lastMove = ((GameController) board.getGameController()).getLastMove();
+            if (lastMove == null || !(lastMove.getPiece() instanceof Pawn)) {
+                return false;
+            }
+
+            Piece lastMovedPiece = lastMove.getPiece();
+            Square lastFrom = lastMove.getFrom();
+            Square lastTo = lastMove.getTo();
+
             int deltaX = distanceX(end);
             int deltaY = distanceY(end);
 
-
-            Square adjacentSquare = board.getSquare(end.getX(), end.getY());
-            return deltaX == 1 && deltaY == Pawn.this.direction && adjacentSquare.isOccupied()
-                    && adjacentSquare.getPiece() instanceof Pawn
-                    && ((Pawn) adjacentSquare.getPiece()).hasMoved()
-                    && !adjacentSquare.getPiece().isSameColor(Pawn.this);
+            // Vérification des conditions de la prise en passant
+            return deltaX == 1 && deltaY == Pawn.this.direction
+                    && lastMovedPiece.getColor() != Pawn.this.getColor()
+                    && Math.abs(lastTo.getY() - lastFrom.getY()) == 2
+                    && lastTo.getX() == end.getX()
+                    && lastTo.getY() == start.getY();
         }
 
         @Override
         public void execute(Board board, Square start, Square end) {
+            GameController.Move lastMove = ((GameController) board.getGameController()).getLastMove();
+            if (lastMove == null) {
+                throw new IllegalStateException("Aucune prise en passant valide");
+            }
+
             Piece pawn = board.getPiece(start.getX(), start.getY());
             board.movePiece(pawn, end);
 
             // Supprimer le pion capturé en passant
-            Square capturedSquare = board.getSquare(end.getX(), start.getY());
+            Square capturedSquare = lastMove.getTo();
             board.getSquare(capturedSquare.getX(), capturedSquare.getY()).setPiece(null);
         }
     }
