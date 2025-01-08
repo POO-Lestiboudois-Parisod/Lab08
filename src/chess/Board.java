@@ -203,6 +203,7 @@ public class Board {
 
 package chess;
 
+import chess.moves.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -244,16 +245,27 @@ public class Board {
     }
 
     public boolean isSquareUnderAttack(Square square, PlayerColor color) {
+        List<Piece> enemyPieces = getAllPiecesOfColor(color.opposite());
+
+        for (Piece piece : enemyPieces) {
+            if (piece.canMove(this, piece.getSquare(), square)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private List<Piece> getAllPiecesOfColor(PlayerColor color) {
+        List<Piece> pieces = new ArrayList<>();
         for (int i = 0; i < NB_SQUARES_PER_LINE; ++i) {
             for (int j = 0; j < NB_SQUARES_PER_LINE; ++j) {
                 Piece piece = board[i][j].getPiece();
-                if (piece != null && piece.getColor() != color) {
-                    if (piece.canMove(this, board[i][j], square)) {
-                        return true;
-                    }
+                if (piece != null && piece.getColor() == color) {
+                    pieces.add(piece);
                 }
             }
         }
-        return false;
+        return pieces;
     }
 }

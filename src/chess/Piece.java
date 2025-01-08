@@ -103,7 +103,6 @@ abstract class Piece {
 
     public interface MoveStrategy {
         boolean isValid(Board board, Square start, Square end);
-
         void execute(Board board, Square start, Square end);
     }
 }
