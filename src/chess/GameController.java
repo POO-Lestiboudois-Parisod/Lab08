@@ -10,7 +10,8 @@ public class GameController implements ChessController {
 
     public GameController() {
         board = new Board();
-        lastMove = null; // Initialisation du dernier coup joué
+        lastMove = null;
+        board.setGameController(this);// Initialisation du dernier coup joué
     }
 
     @Override
@@ -24,7 +25,6 @@ public class GameController implements ChessController {
     public boolean move(int fromX, int fromY, int toX, int toY) {
         Square fromSquare = board.getSquare(fromX, fromY);
         Square toSquare = board.getSquare(toX, toY);
-
         // Vérification des conditions de déplacement
         if (fromSquare.isOccupied()) {
             Piece piece = fromSquare.getPiece();

@@ -82,7 +82,7 @@ public class Pawn extends SpecialFirstMovePiece implements PromotablePiece {
             }
 
             // Capture diagonale
-            if (deltaX == 1 && deltaY == Pawn.this.direction && end.isOccupied() && !isSameColor(end.getPiece())) {
+            if (deltaX == 1 && deltaY == Pawn.this.direction && end.isOccupied() && isNotSameColor(end.getPiece())) {
                 return true;
             }
 
