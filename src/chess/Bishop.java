@@ -1,4 +1,4 @@
-package chess;
+/*package chess;
 
 public class Bishop extends Piece {
 
@@ -44,4 +44,34 @@ public class Bishop extends Piece {
     public boolean canMove(Square square) {
         return false;
     }
+}*/
+
+package chess;
+
+import chess.moves.MoveType;
+import chess.moves.PathValidator;
+import chess.moves.DefaultPathValidator;
+
+public class Bishop extends Piece {
+
+    private final PathValidator pathValidator = new DefaultPathValidator();
+
+    public Bishop(PlayerColor color) {
+        super(color, PieceType.BISHOP);
+    }
+
+    @Override
+    public boolean canMove(Board board, Square start, Square end) {
+        int deltaX = Math.abs(end.getX() - start.getX());
+        int deltaY = Math.abs(end.getY() - start.getY());
+
+        // Le fou peut se déplacer uniquement en diagonale
+        if (!MoveType.DIAGONAL.isValid(deltaX, deltaY)) {
+            return false;
+        }
+
+        // Vérification du chemin via le PathValidator
+        return pathValidator.isPathClear(board, start, end);
+    }
 }
+

@@ -1,4 +1,4 @@
-package chess;
+/*package chess;
 
 public class Knight extends Piece {
 
@@ -25,5 +25,25 @@ public class Knight extends Piece {
     public boolean canMove(Square square) {
         return false;
         //TODO
+    }
+}*/
+
+package chess;
+
+import chess.moves.MoveType;
+
+public class Knight extends Piece {
+
+    public Knight(PlayerColor color) {
+        super(color, PieceType.KNIGHT);
+    }
+
+    @Override
+    public boolean canMove(Board board, Square start, Square end) {
+        int deltaX = Math.abs(end.getX() - start.getX());
+        int deltaY = Math.abs(end.getY() - start.getY());
+
+        // Le cavalier se déplace en forme de L
+        return MoveType.L_SHAPE.isValid(deltaX, deltaY);
     }
 }
