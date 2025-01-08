@@ -62,11 +62,8 @@ public class Bishop extends Piece {
 
     @Override
     public boolean canMove(Board board, Square start, Square end) {
-        int deltaX = Math.abs(end.getX() - start.getX());
-        int deltaY = Math.abs(end.getY() - start.getY());
-
-        // Le fou peut se déplacer uniquement en diagonale
-        if (!MoveType.DIAGONAL.isValid(deltaX, deltaY)) {
+               // Le fou peut se déplacer uniquement en diagonale
+        if (!MoveType.DIAGONAL.isValid(distanceX(end), distanceY(end))) {
             return false;
         }
 

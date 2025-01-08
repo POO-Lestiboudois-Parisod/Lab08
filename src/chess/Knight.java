@@ -38,12 +38,9 @@ public class Knight extends Piece {
         super(color, PieceType.KNIGHT);
     }
 
+    // Le cavalier se déplace en forme de L
     @Override
     public boolean canMove(Board board, Square start, Square end) {
-        int deltaX = Math.abs(end.getX() - start.getX());
-        int deltaY = Math.abs(end.getY() - start.getY());
-
-        // Le cavalier se déplace en forme de L
-        return MoveType.L_SHAPE.isValid(deltaX, deltaY);
+        return (MoveType.L_SHAPE.isValid(distanceX(end), distanceY(end)) && super.canMove(board, start, end) );
     }
 }

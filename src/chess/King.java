@@ -70,7 +70,7 @@ public class King extends SpecialFirstMovePiece implements CastlingPiece {
     public boolean canMove(Board board, Square start, Square end) {
         for (MoveStrategy strategy : moveStrategies) {
             if (strategy.isValid(board, start, end)) {
-                return true;
+                return strategy instanceof CastlingMove || super.canMove(board, start, end);
             }
         }
         return false;
@@ -91,7 +91,7 @@ public class King extends SpecialFirstMovePiece implements CastlingPiece {
 
         @Override
         public boolean isValid(Board board, Square start, Square end) {
-            Piece rook = board.getPiece(end.getX() < start.getX() ? 0 : 7, start.getY());
+           Piece rook = board.getPiece(end.getX() < start.getX() ? 0 : 7, start.getY());
 
             if (!(rook instanceof Rook) || !((Rook) rook).canParticipateInCastling()) {
                 return false;
@@ -100,6 +100,7 @@ public class King extends SpecialFirstMovePiece implements CastlingPiece {
             int stepX = (end.getX() - start.getX()) / Math.abs(end.getX() - start.getX());
             for (int x = start.getX(); x != end.getX() + stepX; x += stepX) {
                 if (board.isSquareUnderAttack(board.getSquare(x, start.getY()), getColor())) {
+                    //TODO Grand roque
                     return false;
                 }
             }

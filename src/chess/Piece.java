@@ -108,11 +108,39 @@ abstract class Piece {
         }
     }
 
+    public int distanceX(Square square){
+        int x = square.getX();
+
+        int currentX = this.square.getX();
+
+
+        // Calcul de la distance
+        return Math.abs(x - currentX);
+    }
+
+    public int distanceY(Square square){
+        int y = square.getY();
+
+        int currentY = this.square.getY();
+
+
+        // Calcul de la distance
+        return Math.abs(y - currentY);
+    }
+
+
+
     public boolean isSameColor(Piece piece) {
         return this.color.equals(piece.color);
     }
 
-    public abstract boolean canMove(Board board, Square start, Square end);
+    public boolean canMove(Board board, Square start, Square end){
+        if(end.isOccupied()) {
+            return !isSameColor(end.getPiece());
+        }
+        return true;
+
+    }
 
     public interface MoveStrategy {
         boolean isValid(Board board, Square start, Square end);
