@@ -1,4 +1,4 @@
-package chess;
+/*package chess;
 
 abstract class SpecialFirstMovePiece extends Piece {
     protected boolean hasMoved;
@@ -9,5 +9,36 @@ abstract class SpecialFirstMovePiece extends Piece {
 
     protected SpecialFirstMovePiece(PlayerColor color, PieceType type) {
         super(color, type);
+    }
+}*/
+
+package chess;
+
+abstract class SpecialFirstMovePiece extends Piece {
+    private boolean hasMoved = false;
+
+    protected SpecialFirstMovePiece(PlayerColor color, PieceType type) {
+        super(color, type);
+    }
+
+    // Vérifie si la pièce a déjà été déplacée
+    public boolean hasMoved() {
+        return hasMoved;
+    }
+
+    // Marque la pièce comme ayant été déplacée
+    public void markAsMoved() {
+        this.hasMoved = true;
+    }
+
+    // Réinitialise l'état de la pièce
+    public void resetMove() {
+        this.hasMoved = false;
+    }
+
+    @Override
+    public void executeMove(Board board, Square start, Square end) {
+        super.executeMove(board, start, end);
+        markAsMoved();
     }
 }

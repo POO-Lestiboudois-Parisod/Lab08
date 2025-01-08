@@ -99,10 +99,24 @@ abstract class Piece {
         this.square = square;
     }
 
+    public void executeMove(Board board, Square start, Square end) {
+        if (canMove(board, start, end)) {
+            board.movePiece(this, end);
+            setSquare(end);
+        } else {
+            throw new IllegalArgumentException("Mouvement invalide.");
+        }
+    }
+
+    public boolean isSameColor(Piece piece) {
+        return this.color.equals(piece.color);
+    }
+
     public abstract boolean canMove(Board board, Square start, Square end);
 
     public interface MoveStrategy {
         boolean isValid(Board board, Square start, Square end);
+
         void execute(Board board, Square start, Square end);
     }
 }

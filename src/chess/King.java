@@ -48,6 +48,10 @@ public class King extends SpecialFirstMovePiece implements CastlingPiece {
 
 package chess;
 
+import chess.moves.MoveType;
+import chess.moves.PathValidator;
+import chess.moves.DefaultPathValidator;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +66,7 @@ public class King extends SpecialFirstMovePiece implements CastlingPiece {
         moveStrategies.add(new CastlingMove());
     }
 
-    // Vérifie si le roi peut effectuer un mouvement valide avec l'une des stratégies
+    @Override
     public boolean canMove(Board board, Square start, Square end) {
         for (MoveStrategy strategy : moveStrategies) {
             if (strategy.isValid(board, start, end)) {
@@ -72,7 +76,7 @@ public class King extends SpecialFirstMovePiece implements CastlingPiece {
         return false;
     }
 
-    // Exécute le mouvement correspondant à la stratégie valide
+    @Override
     public void executeMove(Board board, Square start, Square end) {
         for (MoveStrategy strategy : moveStrategies) {
             if (strategy.isValid(board, start, end)) {
@@ -80,48 +84,16 @@ public class King extends SpecialFirstMovePiece implements CastlingPiece {
                 return;
             }
         }
-        throw new IllegalArgumentException("Mouvement invalide.");
+        throw new IllegalArgumentException("Mouvement invalide pour le roi.");
     }
 
-    @Override
-    public boolean canCastle() {
-        return !hasMoved();
-    }
-
-    // Interface pour les stratégies de mouvement
-    private interface MoveStrategy {
-        boolean isValid(Board board, Square start, Square end);
-
-        void execute(Board board, Square start, Square end);
-    }
-
-    // Classe interne pour le mouvement standard du roi
-    private class StandardKingMove implements MoveStrategy {
-
-        @Override
-        public boolean isValid(Board board, Square start, Square end) {
-            int deltaX = Math.abs(end.getX() - start.getX());
-            int deltaY = Math.abs(end.getY() - start.getY());
-
-            // Le roi peut se déplacer d'une case dans toutes les directions
-            return deltaX <= 1 && deltaY <= 1;
-        }
-
-        @Override
-        public void execute(Board board, Square start, Square end) {
-            Piece king = board.getPiece(start.getX(), start.getY());
-            board.movePiece(king, end);
-        }
-    }
-
-    // Classe interne pour le mouvement de roque
     private class CastlingMove implements MoveStrategy {
 
         @Override
         public boolean isValid(Board board, Square start, Square end) {
             Piece rook = board.getPiece(end.getX() < start.getX() ? 0 : 7, start.getY());
 
-            if (!(rook instanceof CastlingPiece) || !((CastlingPiece) rook).canCastle()) {
+            if (!(rook instanceof Rook) || !((Rook) rook).canParticipateInCastling()) {
                 return false;
             }
 
@@ -141,7 +113,26 @@ public class King extends SpecialFirstMovePiece implements CastlingPiece {
             board.movePiece(king, end);
 
             Piece rook = board.getPiece(end.getX() < start.getX() ? 0 : 7, start.getY());
-            board.movePiece(rook, board.getSquare(end.getX() < start.getX() ? end.getX() + 1 : end.getX() - 1, start.getY()));
+            board.movePiece(rook, board.getSquare(end.getX() < start.getX() ? end.getX() + 1 : end.getX() - 1, end.getY()));
+        }
+    }
+
+    // Classe interne pour le mouvement standard du roi
+    private class StandardKingMove implements MoveStrategy {
+
+        @Override
+        public boolean isValid(Board board, Square start, Square end) {
+            int deltaX = Math.abs(end.getX() - start.getX());
+            int deltaY = Math.abs(end.getY() - start.getY());
+
+            // Le roi peut se déplacer d'une case dans toutes les directions
+            return deltaX <= 1 && deltaY <= 1;
+        }
+
+        @Override
+        public void execute(Board board, Square start, Square end) {
+            Piece king = board.getPiece(start.getX(), start.getY());
+            board.movePiece(king, end);
         }
     }
 }
