@@ -35,10 +35,4 @@ abstract class SpecialFirstMovePiece extends Piece {
     public void resetMove() {
         this.hasMoved = false;
     }
-
-    @Override
-    public void executeMove(Board board, Square start, Square end) {
-        super.executeMove(board, start, end);
-        markAsMoved();
-    }
 }

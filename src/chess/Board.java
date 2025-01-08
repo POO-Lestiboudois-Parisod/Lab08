@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Board {
 
+
     private static final int NB_SQUARES_PER_LINE = 8;
     private final Square[][] board = new Square[NB_SQUARES_PER_LINE][NB_SQUARES_PER_LINE];
     private GameController gameController; // Référence au contrôleur
@@ -34,6 +35,7 @@ public class Board {
         Square currentSquare = piece.getSquare();
         currentSquare.setPiece(null);
         destination.setPiece(piece);
+        //piece.executeMove(this, piece.getSquare(), destination);
     }
 
     public void reset() {
@@ -59,16 +61,16 @@ public class Board {
                 return true;
             }
         }
-
         return false;
     }
 
-    private List<Piece> getAllPiecesOfColor(PlayerColor color) {
+    private List<Piece>
+    getAllPiecesOfColor(PlayerColor color) {
         List<Piece> pieces = new ArrayList<>();
         for (int i = 0; i < NB_SQUARES_PER_LINE; ++i) {
             for (int j = 0; j < NB_SQUARES_PER_LINE; ++j) {
                 Piece piece = board[i][j].getPiece();
-                if (piece != null && piece.getColor() == color) {
+                if (piece != null && piece.getColor() == color && !(piece instanceof King)) {
                     pieces.add(piece);
                 }
             }

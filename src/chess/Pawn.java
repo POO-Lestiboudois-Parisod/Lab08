@@ -31,21 +31,35 @@ public class Pawn extends SpecialFirstMovePiece implements PromotablePiece {
         return false;
     }
 
-    @Override
-    public void executeMove(Board board, Square start, Square end) {
+    public MoveStrategy canMoveStrategy(Board board, Square start, Square end) {
         for (MoveStrategy strategy : moveStrategies) {
             if (strategy.isValid(board, start, end)) {
-                strategy.execute(board, start, end);
-                markAsMoved();
-
-                // Vérification de la promotion
-                if (shouldPromote(end)) {
-                    promote(board, end);
-                }
-                return;
+                return strategy;
             }
         }
-        throw new IllegalArgumentException("Mouvement invalide pour le pion.");
+        return null;
+    }
+
+    @Override
+    public void executeMove(Board board, Square start, Square end) {
+        if(!hasMoved()){
+            markAsMoved();
+        }
+
+        if(canMove(board, start, end)) {
+
+            // for (MoveStrategy strategy : moveStrategies) {
+            MoveStrategy strategy = canMoveStrategy(board, start, end);
+            System.out.println("bijour " + strategy);
+            strategy.execute(board, start, end);
+
+            // Vérification de la promotion
+            if (shouldPromote(end)) {
+                promote(board, end);
+            }
+        }
+        //}
+       // throw new IllegalArgumentException("Mouvement invalide pour le pion.");
     }
 
     @Override
@@ -62,19 +76,13 @@ public class Pawn extends SpecialFirstMovePiece implements PromotablePiece {
         board.getSquare(square.getX(), square.getY()).setPiece(new Queen(getColor()));
     }
 
-    // Interface pour les stratégies de mouvement
-    private interface MoveStrategy {
-        boolean isValid(Board board, Square start, Square end);
-
-        void execute(Board board, Square start, Square end);
-    }
-
     // Mouvement standard d'un pion
     private class StandardPawnMove implements MoveStrategy {
         @Override
         public boolean isValid(Board board, Square start, Square end) {
+            System.out.println("gaga");
             int deltaX = distanceX(end);
-            int deltaY = distanceY(end);
+            int deltaY = end.getY()-start.getY();
 
             // Avancer d'une case
             if (deltaX == 0 && deltaY == Pawn.this.direction && !end.isOccupied()) {
@@ -91,8 +99,10 @@ public class Pawn extends SpecialFirstMovePiece implements PromotablePiece {
 
         @Override
         public void execute(Board board, Square start, Square end) {
+            System.out.println("world");
             Piece pawn = board.getPiece(start.getX(), start.getY());
             board.movePiece(pawn, end);
+            markAsMoved();
         }
     }
 
@@ -100,11 +110,12 @@ public class Pawn extends SpecialFirstMovePiece implements PromotablePiece {
     private class DoubleStepMove implements MoveStrategy {
         @Override
         public boolean isValid(Board board, Square start, Square end) {
+            System.out.println("gogo");
             int deltaX = distanceX(end);
-            int deltaY = distanceY(end);
+            int deltaY = end.getY()-start.getY();
 
             // Avancer de deux cases au premier coup
-            return !hasMoved() && deltaX == 0 && deltaY == 2 * Pawn.this.direction && !end.isOccupied()
+            return !Pawn.super.hasMoved() && deltaX == 0 && deltaY == 2 * Pawn.this.direction && !end.isOccupied()//TODO
                     && Pawn.this.pathValidator.isPathClear(board, start, end);
         }
 
@@ -112,6 +123,8 @@ public class Pawn extends SpecialFirstMovePiece implements PromotablePiece {
         public void execute(Board board, Square start, Square end) {
             Piece pawn = board.getPiece(start.getX(), start.getY());
             board.movePiece(pawn, end);
+            System.out.println("Pawn moved");
+            markAsMoved();
         }
     }
 
@@ -119,6 +132,7 @@ public class Pawn extends SpecialFirstMovePiece implements PromotablePiece {
     private class EnPassantMove implements MoveStrategy {
         @Override
         public boolean isValid(Board board, Square start, Square end) {
+            System.out.println("gugu");
             GameController.Move lastMove = ((GameController) board.getGameController()).getLastMove();
             if (lastMove == null || !(lastMove.getPiece() instanceof Pawn)) {
                 return false;

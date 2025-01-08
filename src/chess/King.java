@@ -26,6 +26,7 @@ public class King extends SpecialFirstMovePiece implements CastlingPiece {
 
     @Override
     public void executeMove(Board board, Square start, Square end) {
+        System.out.println("become bonjour");
         for (MoveStrategy strategy : moveStrategies) {
             if (strategy.isValid(board, start, end)) {
                 strategy.execute(board, start, end);
@@ -51,6 +52,7 @@ public class King extends SpecialFirstMovePiece implements CastlingPiece {
                 return false;
             }
 
+
             for (int x = start.getX(); x <= rook.getSquare().getX(); ++x) {
                 if ((board.isSquareUnderAttack(board.getSquare(x, start.getY()), getColor()) && x <= end.getX()) ||
                         board.getSquare(x, start.getY()).isOccupied()) {
@@ -65,9 +67,10 @@ public class King extends SpecialFirstMovePiece implements CastlingPiece {
         public void execute(Board board, Square start, Square end) {
             Piece king = board.getPiece(start.getX(), start.getY());
             board.movePiece(king, end);
-
+            System.out.println("hallo");
             Piece rook = board.getPiece(end.getX() < start.getX() ? 0 : 7, start.getY());
-            board.movePiece(rook, board.getSquare(end.getX() < start.getX() ? end.getX() + 1 : end.getX() - 1, end.getY()));
+            board.movePiece(rook, start);
+            System.out.println("hello");
         }
     }
 
@@ -85,6 +88,7 @@ public class King extends SpecialFirstMovePiece implements CastlingPiece {
 
         @Override
         public void execute(Board board, Square start, Square end) {
+            System.out.println("bonjour");
             Piece king = board.getPiece(start.getX(), start.getY());
             board.movePiece(king, end);
         }
