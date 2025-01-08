@@ -124,13 +124,12 @@ public class Pawn extends SpecialFirstMovePiece implements PromotablePiece {
             int deltaX = distanceX(end);
             int deltaY = distanceY(end);
 
-            //TODO false pour l'instant
-            // Prise en passant : le pion avance d'une case diagonale et capture un pion adverse
-            Square adjacentSquare = board.getSquare(end.getX(), start.getY());
+
+            Square adjacentSquare = board.getSquare(end.getX(), end.getY());
             return deltaX == 1 && deltaY == Pawn.this.direction && adjacentSquare.isOccupied()
                     && adjacentSquare.getPiece() instanceof Pawn
                     && ((Pawn) adjacentSquare.getPiece()).hasMoved()
-                    && adjacentSquare.getPiece().getColor() != getColor();
+                    && !adjacentSquare.getPiece().isSameColor(Pawn.this);
         }
 
         @Override
