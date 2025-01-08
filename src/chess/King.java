@@ -1,56 +1,4 @@
-/*package chess;
-
-import java.awt.*;
-import java.util.ArrayList;
-
-public class King extends SpecialFirstMovePiece implements CastlingPiece {
-
-    public King(PlayerColor color) {
-        super(color, PieceType.KING);
-    }
-
-    @Override
-    public boolean canMove(Board board, int startX, int startY, int endX, int endY) {
-        return false;
-        //TODO
-    }
-
-    @Override
-    public boolean canMove(Square square){
-
-        super.canMove(square);
-
-
-        // Calcul de la distance
-        double deltaX = distanceX(square);
-        double deltaY = distanceY(square);
-
-        // Le roi peut se déplacer d'une case dans n'importe quelle direction
-        return (deltaX <= Math.sqrt(2) && deltaY <= Math.sqrt(2));
-
-    }
-    public boolean canCastle() {
-        return true;//TODO
-    }
-
-    //TODO
-   /* public void addBeingCheckedBy(Piece piece) {
-        ArrayList<Piece> pieces = new ArrayList<>();
-        for (Piece otherPiece : pieces) {
-            if(otherPiece.isAttacking(this.getSquare())){
-                pieces.add(this);
-            }
-        }
-    }///////////////
-
-
-};*/
-
 package chess;
-
-import chess.moves.MoveType;
-import chess.moves.PathValidator;
-import chess.moves.DefaultPathValidator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,20 +35,25 @@ public class King extends SpecialFirstMovePiece implements CastlingPiece {
         throw new IllegalArgumentException("Mouvement invalide pour le roi.");
     }
 
+    @Override
+    public boolean canCastle() {
+        //TODO
+        return false;
+    }
+
     private class CastlingMove implements MoveStrategy {
 
         @Override
         public boolean isValid(Board board, Square start, Square end) {
-           Piece rook = board.getPiece(end.getX() < start.getX() ? 0 : 7, start.getY());
+            Piece rook = board.getPiece(end.getX() < start.getX() ? 0 : 7, start.getY());
 
             if (!(rook instanceof Rook) || !((Rook) rook).canParticipateInCastling()) {
                 return false;
             }
 
-            int stepX = (end.getX() - start.getX()) / Math.abs(end.getX() - start.getX());
-            for (int x = start.getX(); x != end.getX() + stepX; x += stepX) {
-                if (board.isSquareUnderAttack(board.getSquare(x, start.getY()), getColor())) {
-                    //TODO Grand roque
+            for (int x = start.getX(); x <= rook.getSquare().getX(); ++x) {
+                if ((board.isSquareUnderAttack(board.getSquare(x, start.getY()), getColor()) && x <= end.getX()) ||
+                        board.getSquare(x, start.getY()).isOccupied()) {
                     return false;
                 }
             }
@@ -123,8 +76,8 @@ public class King extends SpecialFirstMovePiece implements CastlingPiece {
 
         @Override
         public boolean isValid(Board board, Square start, Square end) {
-            int deltaX = Math.abs(end.getX() - start.getX());
-            int deltaY = Math.abs(end.getY() - start.getY());
+            int deltaX = King.this.distanceX(end);
+            int deltaY = King.this.distanceY(end);
 
             // Le roi peut se déplacer d'une case dans toutes les directions
             return deltaX <= 1 && deltaY <= 1;

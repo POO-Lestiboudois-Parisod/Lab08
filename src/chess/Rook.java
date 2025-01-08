@@ -92,8 +92,8 @@ public class Rook extends SpecialFirstMovePiece {
 
         @Override
         public boolean isValid(Board board, Square start, Square end) {
-            int deltaX = Math.abs(end.getX() - start.getX());
-            int deltaY = Math.abs(end.getY() - start.getY());
+            int deltaX = Rook.this.distanceX(end);
+            int deltaY = Rook.this.distanceY(end);
 
             // La tour peut se déplacer horizontalement ou verticalement
             if (!MoveType.HORIZONTAL.isValid(deltaX, deltaY) &&
@@ -102,7 +102,7 @@ public class Rook extends SpecialFirstMovePiece {
             }
 
             // Vérification du chemin via le PathValidator
-            return pathValidator.isPathClear(board, start, end);
+            return pathValidator.isPathClear(board, start, end) && Rook.super.canMove(board, start, end);
         }
 
         @Override
