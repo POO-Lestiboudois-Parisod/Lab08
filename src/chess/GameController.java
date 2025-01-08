@@ -25,11 +25,12 @@ public class GameController implements ChessController {
     public boolean move(int fromX, int fromY, int toX, int toY) {
         Square fromSquare = board.getSquare(fromX, fromY);
         Square toSquare = board.getSquare(toX, toY);
+
         // Vérification des conditions de déplacement
         if (fromSquare.isOccupied()) {
             Piece piece = fromSquare.getPiece();
             if (piece.canMove(board, fromSquare, toSquare)) {
-                board.movePiece(piece, toSquare);
+                piece.executeMove(board, fromSquare, toSquare);
 
                 // Mise à jour du dernier coup joué
                 lastMove = new Move(fromSquare, toSquare, piece);

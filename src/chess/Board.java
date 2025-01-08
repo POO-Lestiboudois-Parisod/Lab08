@@ -35,7 +35,6 @@ public class Board {
         Square currentSquare = piece.getSquare();
         currentSquare.setPiece(null);
         destination.setPiece(piece);
-        //piece.executeMove(this, piece.getSquare(), destination);
     }
 
     public void reset() {
