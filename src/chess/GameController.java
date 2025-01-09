@@ -37,10 +37,17 @@ public class GameController implements ChessController {
 
                 view.removePiece(fromX, fromY);
                 view.putPiece(toSquare.getPiece().getType(), toSquare.getPiece().getColor(), toX, toY);
+
                 return true;
             }
         }
         return false;
+    }
+
+    public void removePiece(int x, int y) {
+        view.removePiece(x, y);
+
+
     }
 
     @Override

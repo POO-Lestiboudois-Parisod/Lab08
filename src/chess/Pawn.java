@@ -121,7 +121,7 @@ public class Pawn extends SpecialFirstMovePiece implements PromotablePiece {
             int deltaY = distanceY(end);
 
             // Vérification des conditions de la prise en passant
-            return deltaX == 1 && deltaY == Pawn.this.direction
+            return deltaX == 1 && deltaY == 1
                     && lastMovedPiece.getColor() != Pawn.this.getColor()
                     && Math.abs(lastTo.getY() - lastFrom.getY()) == 2
                     && lastTo.getX() == end.getX()
@@ -136,11 +136,11 @@ public class Pawn extends SpecialFirstMovePiece implements PromotablePiece {
             }
 
             Piece pawn = board.getPiece(start.getX(), start.getY());
+            board.removeCapturedPiece(board.getSquare(end.getX(), start.getY()));
+            board.getGameController().removePiece(end.getX(), start.getY());
             board.movePiece(pawn, end);
 
-            // Supprimer le pion capturé en passant
-            Square capturedSquare = board.getSquare(end.getX(), start.getY());
-            board.getSquare(capturedSquare.getX(), capturedSquare.getY()).setPiece(null);
+
         }
     }
 }
