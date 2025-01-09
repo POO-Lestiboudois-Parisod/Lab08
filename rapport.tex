@@ -11,6 +11,15 @@
 \author{Maxime Lestiboudois \& Parisod Nathan}
 \date{09.01.2025}
 
+% Redéfinir \maketitle pour inclure l'image sous le titre
+\pretitle{\begin{center}\Huge\bfseries}
+\posttitle{\par\end{center}\vspace{0.5cm}
+\begin{center}
+%\includegraphics[scale = 0.2]{images/petitSingeEchecs}
+\end{center}\vspace{0.5cm}}
+
+
+
 % Document
 \begin{document}
     \maketitle
@@ -79,11 +88,33 @@
 
     \section*{Choix de conception}
     \addcontentsline{toc}{section}{Choix de conception}
-    \subsection*{Gestion des état des pièces}
-    La classe \texttt{SpecialFirstMovePiece} gère l'état \texttt{hasMoved} pour les pièces concernées par le roque ou les mouvements spéciaux.
+    \subsection*{Gestion des états des pièces}
+    Les classes \texttt{SpecialFirstMovePiece} gèrent l'attribut \texttt{hasMoved} pour les pièces concernées par le roque ou les mouvements spéciaux. Cette approche permet de suivre l'état de chaque pièce et d'appliquer les règles du jeu de manière dynamique.
 
-    \subsection*{Stratégies de mouvement}
-    Les mouvements sont implémentés via des stratégies internes dans les classes des pièces, permettant une extension future facilitée.
+    \subsection*{Utilisation des stratégies de mouvement}
+    Les mouvements sont implémentés via des classes internes qui définissent des stratégies spécifiques pour chaque type de pièce. Cette approche permet une extension facile pour ajouter de nouveaux types de mouvements ou des règles spéciales.
+
+    \subsection*{Validation des chemins}
+    Pour garantir que les pièces ne traversent pas d'autres pièces lorsqu'elles se déplacent, nous avons utilisé un validateur de chemin \texttt{PathValidator}. Chaque classe de pièce utilise une instance de ce validateur pour vérifier que le chemin emprunté est libre avant d'exécuter le mouvement.
+
+    \subsection*{Gestion des mouvements spéciaux}
+    \begin{itemize}
+        \item \textbf{Roque} : La validation du roque vérifie que ni le roi ni la tour n'ont déjà bougé, que les cases intermédiaires sont libres et qu'aucune case ne se trouve sous attaque.
+        \item \textbf{Prise en passant} : Cette fonctionnalité est implémentée en vérifiant que le dernier coup joué était un double pas d'un pion adverse. La prise est effectuée sur la case que le pion aurait occupé s'il avait avancé d'une seule case.
+        \item \textbf{Promotion} : Lorsqu'un pion atteint la dernière rangée, le joueur est invité à choisir une pièce de promotion. Cette fonctionnalité est gérée via une interaction avec la vue.
+    \end{itemize}
+
+    \subsection*{Architecture MVC}
+    L'application suit une architecture Modèle-Vue-Contrôleur (MVC). Le contrôleur gère la logique de jeu, le modèle représente les éléments du jeu (pièces, plateau) et la vue présente les données à l'utilisateur. Cette architecture permet une séparation claire des responsabilités et facilite la maintenance et les modifications futures.
+
+    \subsection*{Encapsulation des données}
+    Chaque pièce encapsule ses propriétés (couleur, type, position) et gère ses propres règles de mouvement. Cela permet d'éviter les tests conditionnels complexes et garantit que chaque classe respecte le principe de responsabilité unique.
+
+    \subsection*{Gestion des exceptions}
+    Nous avons implémenté une gestion robuste des erreurs en utilisant des exceptions pour traiter les mouvements invalides. Cela permet d'assurer que le programme reste stable même en cas d'entrées incorrectes de la part de l'utilisateur.
+
+    \subsection*{Testabilité}
+    La séparation des stratégies de mouvement et des validations permet d'écrire des tests unitaires ciblés pour chaque composant, garantissant ainsi la fiabilité du code.
 
 %%%%%%%%%%%%%%%%%%%%
 %% Tests effectués %%
@@ -109,3 +140,103 @@
     Ce laboratoire a permis de mettre en pratique les principes de la programmation orientée objet tout en réalisant un projet concret et amusant. Le respect de l'architecture MVC et l'utilisation de classes abstraites et d'interfaces ont permis de structurer le code de manière claire et modulaire.
 
 \end{document}
+
+%%TODO
+%%------------------------------------------------------------------------------------------------------------------------------------------------------------------
+%
+%% Rapport de laboratoire - Jeu d'échecs
+%\documentclass[12pt]{report}
+%
+%\usepackage[a4paper, left=2.5cm, right=2.5cm, top=3cm, bottom=3cm]{geometry}
+%\usepackage{graphicx}
+%\usepackage{glossaries}
+%\usepackage{titling}
+%\setlength{\parindent}{0pt}
+%
+%\title{POO - Laboratoire 08 \\ \large Jeu d'\u00e9checs}
+%\author{Votre Nom}
+%\date{Date}
+%
+%% Document
+%\begin{document}
+%    \maketitle
+%    \tableofcontents
+%    \newpage
+%
+%%%%%%%%%%%%%%%%%%%%%
+%%%  Introduction  %%
+%%%%%%%%%%%%%%%%%%%%%
+%
+%    \section*{Introduction}
+%    \addcontentsline{toc}{section}{Introduction}
+%    Ce laboratoire consiste à implémenter un jeu d'échecs fonctionnel avec une interface graphique (GUI) et un mode console. Les règles à respecter incluent les mouvements de toutes les pièces, le roque, la prise en passant, et la promotion des pions. L'objectif est de créer une application robuste tout en respectant les principes de la programmation orientée objet (POO).
+%
+%%%%%%%%%%%%%%%%%%%%%
+%%% Cahier des charges %%
+%%%%%%%%%%%%%%%%%%%%%
+%
+%    \section*{Cahier des charges}
+%    \addcontentsline{toc}{section}{Cahier des charges}
+%    \subsection*{Objectif du projet}
+%    Le but de ce projet est de développer un jeu d'échecs complet en suivant les règles officielles. L'application doit inclure une gestion complète des pièces et des mouvements, une interface utilisateur graphique ainsi qu'un mode console.
+%
+%    \subsection*{Spécifications fonctionnelles}
+%    \begin{itemize}
+%        \item Prise en charge des mouvements des pièces : rois, dames, tours, fous, cavaliers et pions.
+%        \item Gestion du roque (petit et grand).
+%        \item Implémentation de la prise en passant.
+%        \item Gestion de la promotion des pions avec choix de la pièce de promotion.
+%        \item Affichage d'un message lorsque le roi est en échec.
+%    \end{itemize}
+%
+%    \subsection*{Contraintes techniques}
+%    \begin{itemize}
+%        \item Utilisation des classes et interfaces fournies dans le dossier de départ.
+%        \item Respect des principes de POO, en particulier l'encapsulation et la modularité.
+%        \item Implémentation des règles du jeu sans recours à des structures conditionnelles basées sur les types de pièces.
+%    \end{itemize}
+%
+%%%%%%%%%%%%%%%%%%%%%
+%%% Choix de conception %%
+%%%%%%%%%%%%%%%%%%%%%
+%
+%    \section*{Choix de conception}
+%    \addcontentsline{toc}{section}{Choix de conception}
+%    \subsection*{Gestion des états des pièces}
+%    Les classes \texttt{SpecialFirstMovePiece} gèrent l'attribut \texttt{hasMoved} pour les pièces concernées par le roque ou les mouvements spéciaux. Cette approche permet de suivre l'état de chaque pièce et d'appliquer les règles du jeu de manière dynamique.
+%
+%    \subsection*{Utilisation des stratégies de mouvement}
+%    Les mouvements sont implémentés via des classes internes qui définissent des stratégies spécifiques pour chaque type de pièce. Cette approche permet une extension facile pour ajouter de nouveaux types de mouvements ou des règles spéciales.
+%
+%    \subsection*{Validation des chemins}
+%    Pour garantir que les pièces ne traversent pas d'autres pièces lorsqu'elles se déplacent, nous avons utilisé un validateur de chemin \texttt{PathValidator}. Chaque classe de pièce utilise une instance de ce validateur pour vérifier que le chemin emprunté est libre avant d'exécuter le mouvement.
+%
+%    \subsection*{Gestion des mouvements spéciaux}
+%    \begin{itemize}
+%        \item \textbf{Roque} : La validation du roque vérifie que ni le roi ni la tour n'ont déjà bougé, que les cases intermédiaires sont libres et qu'aucune case ne se trouve sous attaque.
+%        \item \textbf{Prise en passant} : Cette fonctionnalité est implémentée en vérifiant que le dernier coup joué était un double pas d'un pion adverse. La prise est effectuée sur la case que le pion aurait occupé s'il avait avancé d'une seule case.
+%        \item \textbf{Promotion} : Lorsqu'un pion atteint la dernière rangée, le joueur est invité à choisir une pièce de promotion. Cette fonctionnalité est gérée via une interaction avec la vue.
+%    \end{itemize}
+%
+%    \subsection*{Architecture MVC}
+%    L'application suit une architecture Modèle-Vue-Contrôleur (MVC). Le contrôleur gère la logique de jeu, le modèle représente les éléments du jeu (pièces, plateau) et la vue présente les données à l'utilisateur. Cette architecture permet une séparation claire des responsabilités et facilite la maintenance et les modifications futures.
+%
+%    \subsection*{Encapsulation des données}
+%    Chaque pièce encapsule ses propriétés (couleur, type, position) et gère ses propres règles de mouvement. Cela permet d'éviter les tests conditionnels complexes et garantit que chaque classe respecte le principe de responsabilité unique.
+%
+%    \subsection*{Gestion des exceptions}
+%    Nous avons implémenté une gestion robuste des erreurs en utilisant des exceptions pour traiter les mouvements invalides. Cela permet d'assurer que le programme reste stable même en cas d'entrées incorrectes de la part de l'utilisateur.
+%
+%    \subsection*{Testabilité}
+%    La séparation des stratégies de mouvement et des validations permet d'écrire des tests unitaires ciblés pour chaque composant, garantissant ainsi la fiabilité du code.
+%
+%%%%%%%%%%%%%%%%%%%%%
+%%% Conclusion %%
+%%%%%%%%%%%%%%%%%%%%%
+%
+%    \section*{Conclusion}
+%    \addcontentsline{toc}{section}{Conclusion}
+%    Ce laboratoire a permis de mettre en pratique les principes de la programmation orientée objet tout en réalisant un projet concret et amusant. Le respect de l'architecture MVC et l'utilisation de classes abstraites et d'interfaces ont permis de structurer le code de manière claire et modulaire.
+%
+%\end{document}
+
