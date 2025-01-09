@@ -1,5 +1,10 @@
 package chess;
 
+/**
+ * @modified by Lestiboudois Maxime & Parisod Nathan
+ * @date 09/01/2025
+ */
+
 public enum PlayerColor {
     WHITE, BLACK;
 

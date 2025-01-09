@@ -1,5 +1,10 @@
 package chess;
 
+/**
+ * @author Lestiboudois Maxime & Parisod Nathan
+ * @date 09/01/2025
+ */
+
 import chess.views.console.ConsoleView;
 import chess.views.gui.GUIView;
 

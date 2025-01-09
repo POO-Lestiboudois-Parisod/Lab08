@@ -5,6 +5,7 @@
 \usepackage{graphicx}
 \usepackage{glossaries}
 \usepackage{titling}
+\usepackage{pdfpages}
 \setlength{\parindent}{0pt}
 
 \title{POO - Laboratoire 08 \\ \large Jeu d'échecs}
@@ -82,6 +83,13 @@
 %%%%%%%%%%%%%%%%%%%%
 %%  Listing code  %%
 %%%%%%%%%%%%%%%%%%%%
+    \section*{Listing du code}
+    \addcontentsline{toc}{section}{Listing du code}
+    \includepdf[page=-, pagecommand={\thispagestyle{plain}}]{listing.pdf}
+
+
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%
