@@ -1,0 +1,111 @@
+% Rapport de laboratoire - Jeu d'échecs
+\documentclass[12pt]{report}
+
+\usepackage[a4paper, left=2.5cm, right=2.5cm, top=3cm, bottom=3cm]{geometry}
+\usepackage{graphicx}
+\usepackage{glossaries}
+\usepackage{titling}
+\setlength{\parindent}{0pt}
+
+\title{POO - Laboratoire 08 \\ \large Jeu d'échecs}
+\author{Maxime Lestiboudois \& Parisod Nathan}
+\date{09.01.2025}
+
+% Document
+\begin{document}
+    \maketitle
+    \tableofcontents
+    \newpage
+
+%%%%%%%%%%%%%%%%%%%%
+%%  Introduction  %%
+%%%%%%%%%%%%%%%%%%%%
+
+    \section*{Introduction}
+    \addcontentsline{toc}{section}{Introduction}
+    Ce laboratoire consiste à implémenter un jeu d'échecs fonctionnel avec une interface graphique (GUI) et un mode console. Les règles à respecter incluent les mouvements de toutes les pièces, le roque, la prise en passant, et la promotion des pions. L'objectif est de créer une application robuste tout en respectant les principes de la programmation orientée objet (POO).
+
+%%%%%%%%%%%%%%%%%%%%
+%% Cahier des charges %%
+%%%%%%%%%%%%%%%%%%%%
+
+    \section*{Cahier des charges}
+    \addcontentsline{toc}{section}{Cahier des charges}
+    \subsection*{Objectif du projet}
+    Le but de ce projet est de développer un jeu d'échecs complet en suivant les règles officielles. L'application doit inclure une gestion complète des pièces et des mouvements, une interface utilisateur graphique ainsi qu'un mode console.
+
+    \subsection*{Spécifications fonctionnelles}
+    \begin{itemize}
+        \item Prise en charge des mouvements des pièces : rois, dames, tours, fous, cavaliers et pions.
+        \item Gestion du roque (petit et grand).
+        \item Implémentation de la prise en passant.
+        \item Gestion de la promotion des pions avec choix de la pièce de promotion.
+        \item Si le roi est mis en échec, il est obligé de se "protéger".
+    \end{itemize}
+
+    \subsection*{Contraintes techniques}
+    \begin{itemize}
+        \item Utilisation des classes et interfaces fournies dans le dossier de départ.
+        \item Respect des principes de POO, en particulier l'encapsulation et la modularité.
+        \item Implémentation des règles du jeu sans recours à des structures conditionnelles basées sur les types de pièces.
+    \end{itemize}
+
+    ,
+    \subsection*{Modélisation des pièces}
+    Chaque pièce du jeu d'échecs est modélisée par une classe spécifique qui hérite de la classe abstraite \texttt{Piece}. Voici les principales classes et leurs rôles :
+    \begin{itemize}
+        \item \texttt{King} : Représente un roi et gère les mouvements du roi, y compris le roque.
+        \item \texttt{Rook} : Représente une tour et implémente le mouvement des tours et participe au roque.
+        \item \texttt{Bishop} : Représente un fou et modélise le mouvement des fous.
+        \item \texttt{Knight} : Représente un cavalier gère le mouvement en forme de L des cavaliers.
+        \item \texttt{Pawn} : Représente un pion et gère les mouvements spéciaux des pions, y compris la prise en passant et la promotion.
+        \item \texttt{Queen} : Représente une reine et modélise les mouvements de la dame.
+    \end{itemize}
+
+    \subsection*{Gestion des spécificités des mouvements}
+    Des classes internes implémentent les différentes stratégies de mouvements propres à chaque pièce. La validation des mouvements utilise des instances de \texttt{PathValidator} pour vérifier que les chemins empruntés sont libres.
+
+    \subsection*{Gestion des mouvements spéciaux}
+    \begin{itemize}
+        \item \textbf{Roque} : Le mouvement du roi de deux cases enclenche le roque. La validation du roque vérifie que ni le roi ni la tour n'ont déjà bougé et que les cases intermédiaires ne sont pas sous attaque.
+        \item \textbf{Prise en passant} : Ce mouvement est validé en vérifiant que le dernier coup joué était un double pas d'un pion adverse.
+        \item \textbf{Promotion} : Lorsqu'un pion atteint la dernière rangée, le joueur choisit une pièce pour le promouvoir.
+    \end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%
+%% Choix de conception %%
+%%%%%%%%%%%%%%%%%%%%
+
+    \section*{Choix de conception}
+    \addcontentsline{toc}{section}{Choix de conception}
+    \subsection*{Gestion des état des pièces}
+    La classe \texttt{SpecialFirstMovePiece} gère l'état \texttt{hasMoved} pour les pièces concernées par le roque ou les mouvements spéciaux.
+
+    \subsection*{Stratégies de mouvement}
+    Les mouvements sont implémentés via des stratégies internes dans les classes des pièces, permettant une extension future facilitée.
+
+%%%%%%%%%%%%%%%%%%%%
+%% Tests effectués %%
+%%%%%%%%%%%%%%%%%%%%
+
+    \section*{Tests effectués}
+    \addcontentsline{toc}{section}{Tests effectués}
+    Des tests ont été réalisés pour vérifier la validité des mouvements et des règles spéciales. Voici quelques scénarios de test :
+    \begin{itemize}
+        \item Déplacements valides et invalides pour chaque type de pièce.
+        \item Exécution du roque dans les conditions appropriées.
+        \item Prise en passant uniquement lorsqu'elle est permise.
+        \item Promotion de pion avec choix de la pièce.
+    \end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%
+%% Conclusion %%
+%%%%%%%%%%%%%%%%%%%%
+
+    \section*{Conclusion}
+    \addcontentsline{toc}{section}{Conclusion}
+    Ce laboratoire a permis de mettre en pratique les principes de la programmation orientée objet tout en réalisant un projet concret et amusant. Le respect de l'architecture MVC et l'utilisation de classes abstraites et d'interfaces ont permis de structurer le code de manière claire et modulaire.
+
+\end{document}
