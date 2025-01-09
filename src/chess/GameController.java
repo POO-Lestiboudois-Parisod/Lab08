@@ -2,6 +2,8 @@ package chess;
 
 import chess.views.gui.GUIView;
 
+import java.util.ArrayList;
+
 public class GameController implements ChessController {
 
     private Board board;
@@ -21,12 +23,29 @@ public class GameController implements ChessController {
         this.newGame();
     }
 
+    public boolean isKingInCheck(PlayerColor color) {
+        Square kingSquare = findKing(color);
+        return board.isSquareUnderAttack(kingSquare, color);
+    }
+
+    private Square findKing(PlayerColor color) {
+        for (int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+                Piece piece = board.getSquare(x, y).getPiece();
+                if (piece != null && piece.getType() == PieceType.KING && piece.getColor() == color) {
+                    return board.getSquare(x, y);
+                }
+            }
+        }
+        throw new IllegalStateException("King not found on the board");
+    }
+
     @Override
     public boolean move(int fromX, int fromY, int toX, int toY) {
         Square fromSquare = board.getSquare(fromX, fromY);
         Square toSquare = board.getSquare(toX, toY);
 
-        if(fromSquare.getPiece() == null || (lastMove == null && fromSquare.getPiece().getColor() != PlayerColor.WHITE)||lastMove != null && !lastMove.getPiece().isNotSameColor(fromSquare.getPiece())) {
+        if (fromSquare.getPiece() == null || (lastMove == null && fromSquare.getPiece().getColor() != PlayerColor.WHITE) || lastMove != null && !lastMove.getPiece().isNotSameColor(fromSquare.getPiece())) {
             return false;
         }
 
@@ -34,15 +53,27 @@ public class GameController implements ChessController {
         if (fromSquare.isOccupied()) {
             Piece piece = fromSquare.getPiece();
             if (piece.canMove(board, fromSquare, toSquare)) {
-                piece.executeMove(board, fromSquare, toSquare);
 
-                // Mise à jour du dernier coup joué
-                lastMove = new Move(fromSquare, toSquare, piece);
+                //Simuler le mouvement
+                Piece capturedPiece = toSquare.getPiece();
+                board.movePiece(piece, toSquare);
+                boolean isInCheck = isKingInCheck(piece.getColor());
 
-                view.removePiece(fromX, fromY);
-                view.putPiece(toSquare.getPiece().getType(), toSquare.getPiece().getColor(), toX, toY);
+                //Annuler le mouvement
+                board.movePiece(piece, fromSquare);
+                toSquare.setPiece(capturedPiece);
 
-                return true;
+                if (!isInCheck) {
+                    piece.executeMove(board, fromSquare, toSquare);
+
+                    // Mise à jour du dernier coup joué
+                    lastMove = new Move(fromSquare, toSquare, piece);
+
+                    view.removePiece(fromX, fromY);
+                    view.putPiece(toSquare.getPiece().getType(), toSquare.getPiece().getColor(), toX, toY);
+
+                    return true;
+                }
             }
         }
         return false;
@@ -51,8 +82,9 @@ public class GameController implements ChessController {
     public void removePiece(int x, int y) {
         view.removePiece(x, y);
     }
+
     public void setPiece(int x, int y) {
-        view.putPiece(board.getPiece(x,y).getType(), board.getPiece(x,y).getColor(), x, y);
+        view.putPiece(board.getPiece(x, y).getType(), board.getPiece(x, y).getColor(), x, y);
     }
 
     @Override
@@ -144,6 +176,7 @@ public class GameController implements ChessController {
     public Move getLastMove() {
         return lastMove;
     }
+
     public void setLastMoveAtNull() {
         lastMove = null;
     }
