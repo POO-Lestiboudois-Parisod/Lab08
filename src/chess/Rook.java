@@ -31,6 +31,7 @@ public class Rook extends SpecialFirstMovePiece {
         for (MoveStrategy strategy : moveStrategies) {
             if (strategy.isValid(board, start, end)) {
                 strategy.execute(board, start, end);
+
                 return;
             }
         }
@@ -40,15 +41,9 @@ public class Rook extends SpecialFirstMovePiece {
     public boolean canParticipateInCastling() {
         return !hasMoved();
     }
+
     public void participatedInCastling() {
         markAsMoved();
-    }
-
-
-    // Interface pour les stratégies de mouvement
-    private interface MoveStrategy {
-        boolean isValid(Board board, Square start, Square end);
-        void execute(Board board, Square start, Square end);
     }
 
     // Classe interne pour le mouvement standard de la tour
@@ -75,6 +70,7 @@ public class Rook extends SpecialFirstMovePiece {
         public void execute(Board board, Square start, Square end) {
             Piece rook = board.getPiece(start.getX(), start.getY());
             board.movePiece(rook, end);
+            markAsMoved();
         }
     }
 }

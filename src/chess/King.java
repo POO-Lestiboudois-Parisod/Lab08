@@ -29,10 +29,9 @@ public class King extends SpecialFirstMovePiece implements CastlingPiece {
         for (MoveStrategy strategy : moveStrategies) {
             if (strategy.isValid(board, start, end)) {
                 strategy.execute(board, start, end);
-                if(!hasMoved()){
+                if (!hasMoved()) {
                     markAsMoved();
                 }
-                System.out.println(hasMoved());
                 return;
             }
         }
@@ -56,7 +55,8 @@ public class King extends SpecialFirstMovePiece implements CastlingPiece {
             int rookX = deltaX > 0 ? 7 : 0;
             Piece rook = board.getPiece(rookX, start.getY());
 
-            if (!(rook instanceof Rook) || ((Rook) rook).canParticipateInCastling() || hasMoved()) {
+
+            if (!(rook instanceof Rook) || !((Rook) rook).canParticipateInCastling() || hasMoved()) {
                 return false;
             }
 

@@ -6,7 +6,7 @@ import chess.moves.PathValidator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pawn extends SpecialFirstMovePiece implements PromotablePiece {
+public class Pawn extends SpecialFirstMovePiece {
 
     private final int direction;
     private final List<MoveStrategy> moveStrategies = new ArrayList<>();
@@ -48,18 +48,13 @@ public class Pawn extends SpecialFirstMovePiece implements PromotablePiece {
         throw new IllegalArgumentException("Mouvement invalide pour le pion.");
     }
 
-    @Override
-    public boolean canPromote() {
-        return true;
-    }
 
     private boolean shouldPromote(Square end) {
         return (getColor() == PlayerColor.WHITE && end.getY() == 7) || (getColor() == PlayerColor.BLACK && end.getY() == 0);
     }
 
     private void promote(Board board, Square square) {
-        // Par défaut, promouvoir en reine
-        board.getSquare(square.getX(), square.getY()).setPiece(new Queen(getColor()));
+        board.getGameController().promotePawn(square);
     }
 
     // Mouvement standard d'un pion

@@ -57,7 +57,8 @@ public class GameController implements ChessController {
 
     @Override
     public void newGame() {
-        board.reset();  // Réinitialisation de l'échiquier
+        board.reset();// Réinitialisation de l'échiquier
+        setLastMoveAtNull();
 
         // Placement des pièces blanches
         for (int i = 0; i < 8; i++) {
@@ -96,6 +97,25 @@ public class GameController implements ChessController {
         }
     }
 
+    public void promotePawn(Square square) {
+        PromotablePiece[] promotionChoices = {new PromotablePiece(PieceType.QUEEN), new PromotablePiece(PieceType.ROOK), new PromotablePiece(PieceType.BISHOP), new PromotablePiece(PieceType.KNIGHT)};
+        PromotablePiece choice = board.getGameController().view.askUser("Promotion", "Choisissez une pièce pour la promotion :", promotionChoices);
+        switch (choice.getPieceType()) {
+            case ROOK:
+                square.setPiece(new Rook(square.getPiece().getColor()));
+                break;
+            case BISHOP:
+                square.setPiece(new Bishop(square.getPiece().getColor()));
+                break;
+            case KNIGHT:
+                square.setPiece(new Knight(square.getPiece().getColor()));
+                break;
+            default:
+                square.setPiece(new Queen(square.getPiece().getColor()));
+                break;
+        }
+    }
+
     // Classe interne pour représenter un coup
     public static class Move {
         private final Square from;
@@ -123,5 +143,8 @@ public class GameController implements ChessController {
 
     public Move getLastMove() {
         return lastMove;
+    }
+    public void setLastMoveAtNull() {
+        lastMove = null;
     }
 }
