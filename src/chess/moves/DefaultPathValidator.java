@@ -1,10 +1,30 @@
 package chess.moves;
 
+/**
+ * @author Lestiboudois Maxime & Parisod Nathan
+ * @date 09/01/2025
+ */
+
 import chess.Board;
 import chess.Square;
 
+/**
+ * Vérifie si le chemin entre deux cases sur l'échiquier est dégagé.
+ * Implémente l'interface {@link PathValidator}.
+ *
+ * Lève une exception {@link IllegalArgumentException} si la case de départ
+ * est identique à la case d'arrivée.</p>
+ */
 public class DefaultPathValidator implements PathValidator {
-
+    /**
+     * Vérifie si le chemin entre deux cases est dégagé.
+     *
+     * @param board l'état actuel de l'échiquier.
+     * @param start la case de départ.
+     * @param end la case d'arrivée.
+     * @return {@code true} si le chemin est dégagé, {@code false} sinon.
+     * @throws IllegalArgumentException si la case de départ est identique à la case d'arrivée.
+     */
     @Override
     public boolean isPathClear(Board board, Square start, Square end) {
         int stepX = end.getX() - start.getX();

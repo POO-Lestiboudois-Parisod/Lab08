@@ -1,12 +1,31 @@
-package chess;
+package chess.pieces;
+
+/**
+ * @author Lestiboudois Maxime & Parisod Nathan
+ * @date 09/01/2025
+ */
+
+import chess.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Représente un roi dans un jeu d'échecs.
+ * Le roi peut effectuer des mouvements standards d'une case dans toutes les directions
+ * ou des roques dans certaines conditions.
+ */
 public class King extends SpecialFirstMovePiece {
-
+    /**
+     * Liste des stratégies de mouvement du roi, incluant les mouvements standards et le roque.
+     */
     private final List<MoveStrategy> moveStrategies = new ArrayList<>();
 
+    /**
+     * Initialise un roi avec une couleur spécifiée.
+     *
+     * @param color la couleur du joueur à laquelle appartient le roi.
+     */
     public King(PlayerColor color) {
         super(color, PieceType.KING);
         // Ajouter les stratégies de mouvement
@@ -14,6 +33,14 @@ public class King extends SpecialFirstMovePiece {
         moveStrategies.add(new CastlingMove());
     }
 
+    /**
+     * Vérifie si le roi peut se déplacer d'une case à une autre selon ses règles de mouvement.
+     *
+     * @param board l'échiquier représentant l'état actuel du jeu.
+     * @param start la case de départ.
+     * @param end la case d'arrivée.
+     * @return {@code true} si le déplacement est valide, {@code false} sinon.
+     */
     @Override
     public boolean canMove(Board board, Square start, Square end) {
         for (MoveStrategy strategy : moveStrategies) {
@@ -24,6 +51,14 @@ public class King extends SpecialFirstMovePiece {
         return false;
     }
 
+    /**
+     * Exécute un mouvement pour le roi sur l'échiquier.
+     *
+     * @param board l'échiquier représentant l'état actuel du jeu.
+     * @param start la case de départ.
+     * @param end la case d'arrivée.
+     * @throws IllegalArgumentException si le mouvement est invalide.
+     */
     @Override
     public void executeMove(Board board, Square start, Square end) {
         for (MoveStrategy strategy : moveStrategies) {
@@ -38,7 +73,18 @@ public class King extends SpecialFirstMovePiece {
         throw new IllegalArgumentException("Mouvement invalide pour le roi.");
     }
 
+    /**
+     * Stratégie interne pour gérer le roque.
+     */
     private class CastlingMove implements MoveStrategy {
+        /**
+         * Vérifie si un roque est valide dans l'état actuel du jeu.
+         *
+         * @param board l'échiquier.
+         * @param start la case de départ du roi.
+         * @param end la case d'arrivée du roi.
+         * @return {@code true} si le roque est valide, {@code false} sinon.
+         */
         @Override
         public boolean isValid(Board board, Square start, Square end) {
             int deltaX = end.getX() - start.getX();
@@ -63,6 +109,13 @@ public class King extends SpecialFirstMovePiece {
             return true;
         }
 
+        /**
+         * Exécute le roque en déplaçant le roi et la tour sur l'échiquier.
+         *
+         * @param board l'échiquier.
+         * @param start la case de départ du roi.
+         * @param end la case d'arrivée du roi.
+         */
         @Override
         public void execute(Board board, Square start, Square end) {
             int deltaX = end.getX() - start.getX();
@@ -83,9 +136,19 @@ public class King extends SpecialFirstMovePiece {
         }
     }
 
-    // Classe interne pour le mouvement standard du roi
+    /**
+     * Stratégie interne pour gérer le mouvement standard du roi.
+     */
     private class StandardKingMove implements MoveStrategy {
 
+        /**
+         * Vérifie si le mouvement standard du roi est valide (une case dans toutes les directions).
+         *
+         * @param board l'échiquier.
+         * @param start la case de départ.
+         * @param end la case d'arrivée.
+         * @return {@code true} si le mouvement est valide, {@code false} sinon.
+         */
         @Override
         public boolean isValid(Board board, Square start, Square end) {
             int deltaX = King.this.distanceX(end);
@@ -95,6 +158,13 @@ public class King extends SpecialFirstMovePiece {
             return deltaX <= 1 && deltaY <= 1;
         }
 
+        /**
+         * Exécute le mouvement standard du roi.
+         *
+         * @param board l'échiquier.
+         * @param start la case de départ.
+         * @param end la case d'arrivée.
+         */
         @Override
         public void execute(Board board, Square start, Square end) {
             Piece king = board.getPiece(start.getX(), start.getY());

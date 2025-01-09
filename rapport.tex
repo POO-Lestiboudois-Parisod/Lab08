@@ -15,7 +15,7 @@
 \pretitle{\begin{center}\Huge\bfseries}
 \posttitle{\par\end{center}\vspace{0.5cm}
 \begin{center}
-%\includegraphics[scale = 0.2]{images/petitSingeEchecs}
+\includegraphics[scale = 0.4]{petitSingeEchecs}
 \end{center}\vspace{0.5cm}}
 
 
@@ -71,8 +71,6 @@
         \item \texttt{Queen} : Représente une reine et modélise les mouvements de la dame.
     \end{itemize}
 
-    \subsection*{Gestion des spécificités des mouvements}
-    Des classes internes implémentent les différentes stratégies de mouvements propres à chaque pièce. La validation des mouvements utilise des instances de \texttt{PathValidator} pour vérifier que les chemins empruntés sont libres.
 
     \subsection*{Gestion des mouvements spéciaux}
     \begin{itemize}
@@ -80,6 +78,10 @@
         \item \textbf{Prise en passant} : Ce mouvement est validé en vérifiant que le dernier coup joué était un double pas d'un pion adverse.
         \item \textbf{Promotion} : Lorsqu'un pion atteint la dernière rangée, le joueur choisit une pièce pour le promouvoir.
     \end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%
+%%  Listing code  %%
+%%%%%%%%%%%%%%%%%%%%
 
 
 %%%%%%%%%%%%%%%%%%%%
