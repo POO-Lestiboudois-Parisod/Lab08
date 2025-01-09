@@ -41,13 +41,16 @@ public class King extends SpecialFirstMovePiece implements CastlingPiece {
         return false;
     }
 
-    private class CastlingMove implements MoveStrategy {
+    /*private class CastlingMove implements MoveStrategy {
 
         @Override
         public boolean isValid(Board board, Square start, Square end) {
+
+            int deltaX = distanceX(end);
+
             Piece rook = board.getPiece(end.getX() < start.getX() ? 0 : 7, start.getY());
 
-            if (!(rook instanceof Rook) || !((Rook) rook).canParticipateInCastling()) {
+            if (!(rook instanceof Rook) || !((Rook) rook).canParticipateInCastling() || deltaX != 2) {
                 return false;
             }
 
@@ -68,6 +71,48 @@ public class King extends SpecialFirstMovePiece implements CastlingPiece {
             board.movePiece(king, end);
             Piece rook = board.getPiece(end.getX() < start.getX() ? 0 : 7, start.getY());
             board.movePiece(rook, start);
+            board.getGameController().removePiece(rook.getSquare().getX(), rook.getSquare().getY());
+            board.getGameController().setPiece(rook, start.getX(), start.getY());
+        }
+    }*/
+
+    private class CastlingMove implements MoveStrategy {
+        @Override
+        public boolean isValid(Board board, Square start, Square end) {
+            int deltaX = end.getX() - start.getX();
+            if (Math.abs(deltaX) != 2 || start.getY() != end.getY()) {
+                return false;
+            }
+
+            int rookX = deltaX > 0 ? 7 : 0;
+            Piece rook = board.getPiece(rookX, start.getY());
+
+            if (!(rook instanceof Rook) || ((Rook) rook).hasMoved()) {
+                return false;
+            }
+
+            for (int x = Math.min(start.getX(), rookX) + 1; x < Math.max(start.getX(), rookX); x++) {
+                if (board.getSquare(x, start.getY()).isOccupied()) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        @Override
+        public void execute(Board board, Square start, Square end) {
+            int deltaX = end.getX() - start.getX();
+            int rookX = deltaX > 0 ? 7 : 0;
+            int rookDestinationX = start.getX() + (deltaX > 0 ? 1 : -1);
+
+            Piece king = board.getPiece(start.getX(), start.getY());
+            Piece rook = board.getPiece(rookX, start.getY());
+
+            board.movePiece(king, end);
+            board.movePiece(rook, board.getSquare(rookDestinationX, start.getY()));
+            board.getGameController().removePiece(rook.getSquare().getX(), rook.getSquare().getY());
+            board.getGameController().setPiece(rook, start.getX(), start.getY());
         }
     }
 
@@ -85,7 +130,6 @@ public class King extends SpecialFirstMovePiece implements CastlingPiece {
 
         @Override
         public void execute(Board board, Square start, Square end) {
-            System.out.println("bonjour");
             Piece king = board.getPiece(start.getX(), start.getY());
             board.movePiece(king, end);
         }

@@ -139,8 +139,6 @@ public class Pawn extends SpecialFirstMovePiece implements PromotablePiece {
             board.removeCapturedPiece(board.getSquare(end.getX(), start.getY()));
             board.getGameController().removePiece(end.getX(), start.getY());
             board.movePiece(pawn, end);
-
-
         }
     }
 }
