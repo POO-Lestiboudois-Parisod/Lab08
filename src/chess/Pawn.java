@@ -64,6 +64,12 @@ public class Pawn extends SpecialFirstMovePiece {
             int deltaX = distanceX(end);
             int deltaY = distanceY(end);
 
+            // Vérifier que le pion avance dans la bonne direction
+            if ((getColor() == PlayerColor.WHITE && end.getY() <= start.getY()) ||
+                    (getColor() == PlayerColor.BLACK && end.getY() >= start.getY())) {
+                return false;
+            }
+
             // Avancer d'une case
             return (deltaX == 0 && deltaY == 1 && !end.isOccupied()) ||
                     (deltaX == 1 && deltaY == 1 && end.isOccupied() && isNotSameColor(end.getPiece()));
