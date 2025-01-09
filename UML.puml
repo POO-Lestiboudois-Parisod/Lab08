@@ -64,7 +64,7 @@ package chess {
         + boolean canMove(Board board, Square start, Square end)
     }
 
-    class Piece {
+    abstract class Piece {
         - final PlayerColor color
         - final PieceType type
         - Square square
@@ -118,18 +118,18 @@ package chess {
         + PieceType getPieceType()
     }
 
-    class PieceType {
-        + <<enum>> PAWN
-        + <<enum>> ROOK
-        + <<enum>> KNIGHT
-        + <<enum>> BISHOP
-        + <<enum>> QUEEN
-        + <<enum>> KING
+    enum PieceType {
+        PAWN
+        ROOK
+        KNIGHT
+        BISHOP
+        QUEEN
+        KING
     }
 
-    class PlayerColor {
-        + <<enum>> WHITE
-        + <<enum>> BLACK
+    enum PlayerColor {
+        WHITE
+        BLACK
         + PlayerColor opposite()
     }
 
@@ -247,16 +247,13 @@ package chess {
 }
 
 package chess.moves {
-    class MoveType {
+    enum MoveType {
+        DIAGONAL
+        HORIZONTAL
+        VERTICAL
+        L_SHAPE
         + boolean isValid(int deltaX, int deltaY)
-        --
-        + <<enum>> DIAGONAL
-        + <<enum>> HORIZONTAL
-        + <<enum>> VERTICAL
-        + <<enum>> L_SHAPE
     }
-
-    MoveType : + isValid(int deltaX, int deltaY)
 
     Rook *-- MoveType : "uses"
     Queen *-- MoveType : "uses"
