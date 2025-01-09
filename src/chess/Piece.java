@@ -28,6 +28,7 @@ abstract class Piece {
 
     public void executeMove(Board board, Square start, Square end) {
         if (canMove(board, start, end)) {
+            board.removeCapturedPiece(end);
             board.movePiece(this, end);
             setSquare(end);
         } else {

@@ -37,6 +37,12 @@ public class Board {
         destination.setPiece(piece);
     }
 
+    public void removeCapturedPiece(Square destination) {
+        if (destination.isOccupied()) {
+            destination.setPiece(null);
+        }
+    }
+
     public void reset() {
         for (int i = 0; i < NB_SQUARES_PER_LINE; ++i) {
             for (int j = 0; j < NB_SQUARES_PER_LINE; ++j) {
