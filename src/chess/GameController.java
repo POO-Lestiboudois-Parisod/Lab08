@@ -99,7 +99,7 @@ public class GameController implements ChessController {
 
     public void promotePawn(Square square) {
         PromotablePiece[] promotionChoices = {new PromotablePiece(PieceType.QUEEN), new PromotablePiece(PieceType.ROOK), new PromotablePiece(PieceType.BISHOP), new PromotablePiece(PieceType.KNIGHT)};
-        PromotablePiece choice = board.getGameController().view.askUser("Promotion", "Choisissez une pièce pour la promotion :", promotionChoices);
+        PromotablePiece choice = this.view.askUser("Promotion", "Choisissez une pièce pour la promotion :", promotionChoices);
         switch (choice.getPieceType()) {
             case ROOK:
                 square.setPiece(new Rook(square.getPiece().getColor()));
