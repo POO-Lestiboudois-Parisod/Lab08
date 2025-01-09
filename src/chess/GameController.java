@@ -1,9 +1,5 @@
 package chess;
 
-import chess.views.gui.GUIView;
-
-import java.util.ArrayList;
-
 public class GameController implements ChessController {
 
     private Board board;

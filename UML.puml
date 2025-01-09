@@ -1,10 +1,272 @@
 @startuml
-
 skinparam classAttributeIconSize 0
 skinparam roundCorner 0
 skinparam linetype ortho
 
-class Pawn {
-    - private int a;
+package chess {
+    class Main {
+        + static void main(String[] args)
+    }
+
+    class Pawn {
+        - final int direction
+        - final List<MoveStrategy> moveStrategies
+        - final PathValidator pathValidator
+        --
+        + Pawn(PlayerColor color)
+        + boolean canMove(Board board, Square start, Square end)
+        + void executeMove(Board board, Square start, Square end)
+        - boolean shouldPromote(Square end)
+        - void promote(Board board, Square square)
+    }
+
+    class Rook {
+        - final List<MoveStrategy> moveStrategies
+        --
+        + Rook(PlayerColor color)
+        + boolean canMove(Board board, Square start, Square end)
+        + void executeMove(Board board, Square start, Square end)
+        + boolean canParticipateInCastling()
+        + void participatedInCastling()
+    }
+
+    class King {
+        - final List<MoveStrategy> moveStrategies
+        --
+        + King(PlayerColor color)
+        + boolean canMove(Board board, Square start, Square end)
+        + void executeMove(Board board, Square start, Square end)
+        + boolean canCastle()
+    }
+
+    King --|> SpecialFirstMovePiece
+    King ..|> CastlingPiece
+    King *-- StandardKingMove
+    King *-- CastlingMove
+
+    class Queen {
+        - final PathValidator pathValidator
+        --
+        + Queen(PlayerColor color)
+        + boolean canMove(Board board, Square start, Square end)
+        + void setSquare(Square square)
+    }
+
+    class Knight {
+        + Knight(PlayerColor color)
+        + boolean canMove(Board board, Square start, Square end)
+    }
+
+    class Bishop {
+        - final PathValidator pathValidator
+        --
+        + Bishop(PlayerColor color)
+        + boolean canMove(Board board, Square start, Square end)
+    }
+
+    class Piece {
+        - final PlayerColor color
+        - final PieceType type
+        - Square square
+        --
+        + Piece(PlayerColor color, PieceType type)
+        + PlayerColor getColor()
+        + PieceType getType()
+        + Square getSquare()
+        + void setSquare(Square square)
+        + void executeMove(Board board, Square start, Square end)
+        + int distanceX(Square square)
+        + int distanceY(Square square)
+        + boolean isNotSameColor(Piece piece)
+        + boolean canMove(Board board, Square start, Square end)
+    }
+
+    class Square {
+        - final int x
+        - final int y
+        - Piece piece
+        --
+        + Square(int x, int y)
+        + boolean isOccupied()
+        + Piece getPiece()
+        + void setPiece(Piece piece)
+        + int getX()
+        + int getY()
+    }
+
+    class Board {
+        - static final int NB_SQUARES_PER_LINE
+        - Square[][] board
+        - GameController gameController
+        --
+        + Board()
+        + void setGameController(GameController gameController)
+        + GameController getGameController()
+        + Piece getPiece(int x, int y)
+        + void movePiece(Piece piece, Square destination)
+        + void removeCapturedPiece(Square destination)
+        + void reset()
+        + Square getSquare(int x, int y)
+        + boolean isSquareUnderAttack(Square square, PlayerColor color)
+    }
+
+    class PromotablePiece {
+        - PieceType pieceType
+        --
+        + PromotablePiece(PieceType pieceType)
+        + String textValue()
+        + PieceType getPieceType()
+    }
+
+    class PieceType {
+        + <<enum>> PAWN
+        + <<enum>> ROOK
+        + <<enum>> KNIGHT
+        + <<enum>> BISHOP
+        + <<enum>> QUEEN
+        + <<enum>> KING
+    }
+
+    class PlayerColor {
+        + <<enum>> WHITE
+        + <<enum>> BLACK
+        + PlayerColor opposite()
+    }
+
+    class GameController implements ChessController {
+        - Board board
+        - Move lastMove
+        --
+        + GameController()
+        + void start()
+        + boolean isKingInCheck(PlayerColor color)
+        + boolean move(int fromX, int fromY, int toX, int toY)
+        + void removePiece(int x, int y)
+        + void setPiece(int x, int y)
+        + void newGame()
+        + void promotePawn(Square square)
+        + Move getLastMove()
+        + void setLastMoveAtNull()
+    }
+
+    class Move {
+        - final Square from
+        - final Square to
+        - final Piece piece
+        --
+        + Move(Square from, Square to, Piece piece)
+        + Square getFrom()
+        + Square getTo()
+        + Piece getPiece()
+    }
+
+    class ChessController {
+        + void start()
+        + boolean move(int fromX, int fromY, int toX, int toY)
+        + void newGame()
+    }
+
+    Main ..> ChessController
+
+    GameController *-- Board
+    GameController o-- Move
+
+    Square *-- Piece : "contains"
+    Board *-- Square : "composition"
+
+    Bishop --|> Piece
+    Knight --|> Piece
+    Queen --|> Piece
+    Rook --|> SpecialFirstMovePiece
+    Pawn --|> SpecialFirstMovePiece
+    Piece o--> MoveStrategy
+
+    class StandardKingMove {
+        + boolean isValid(Board board, Square start, Square end)
+        + void execute(Board board, Square start, Square end)
+    }
+
+    class CastlingMove {
+        + boolean isValid(Board board, Square start, Square end)
+        + void execute(Board board, Square start, Square end)
+    }
+
+    abstract class SpecialFirstMovePiece extends Piece {
+        - boolean hasMoved
+        --
+        + SpecialFirstMovePiece(PlayerColor color, PieceType type)
+        + boolean hasMoved()
+        + void markAsMoved()
+        + void resetMove()
+    }
+
+    Pawn o--> MoveStrategy : "uses"
+    Rook o--> MoveStrategy : "uses"
+    King o--> MoveStrategy : "uses"
+    Pawn o--> PathValidator : "pathValidator"
+    Rook *-- StandardRookMove
+    Pawn *-- StandardPawnMove
+    Pawn *-- DoubleStepMove
+    Pawn *-- EnPassantMove
+
+    class StandardPawnMove {
+        + boolean isValid(Board board, Square start, Square end)
+        + void execute(Board board, Square start, Square end)
+    }
+
+    class DoubleStepMove {
+        + boolean isValid(Board board, Square start, Square end)
+        + void execute(Board board, Square start, Square end)
+    }
+
+    class EnPassantMove {
+        + boolean isValid(Board board, Square start, Square end)
+        + void execute(Board board, Square start, Square end)
+    }
+
+    class StandardRookMove {
+        - final PathValidator pathValidator
+        --
+        + boolean isValid(Board board, Square start, Square end)
+        + void execute(Board board, Square start, Square end)
+    }
+
+    interface MoveStrategy {
+        + boolean isValid(Board board, Square start, Square end)
+        + void execute(Board board, Square start, Square end)
+    }
+
+    interface PathValidator {
+        + boolean isPathClear(Board board, Square start, Square end)
+    }
+
+    interface SpecialMove {
+        + boolean isValid(Board board, Square start, Square end)
+        + void execute(Board board, Square start, Square end)
+    }
+}
+
+package chess.moves {
+    class MoveType {
+        + boolean isValid(int deltaX, int deltaY)
+        --
+        + <<enum>> DIAGONAL
+        + <<enum>> HORIZONTAL
+        + <<enum>> VERTICAL
+        + <<enum>> L_SHAPE
+    }
+
+    MoveType : + isValid(int deltaX, int deltaY)
+
+    Rook *-- MoveType : "uses"
+    Queen *-- MoveType : "uses"
+    Knight *-- MoveType : "uses"
+    Bishop *-- MoveType : "uses"
+
+    class DefaultPathValidator {
+        + boolean isPathClear(Board board, Square start, Square end)
+    }
+
+    PathValidator <|-- DefaultPathValidator
 }
 @enduml

@@ -3,7 +3,7 @@ package chess;
 import java.util.ArrayList;
 import java.util.List;
 
-public class King extends SpecialFirstMovePiece implements CastlingPiece {
+public class King extends SpecialFirstMovePiece {
 
     private final List<MoveStrategy> moveStrategies = new ArrayList<>();
 
@@ -36,12 +36,6 @@ public class King extends SpecialFirstMovePiece implements CastlingPiece {
             }
         }
         throw new IllegalArgumentException("Mouvement invalide pour le roi.");
-    }
-
-    @Override
-    public boolean canCastle() {
-        //TODO
-        return false;
     }
 
     private class CastlingMove implements MoveStrategy {

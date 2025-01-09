@@ -7,6 +7,7 @@ public class PromotablePiece implements ChessView.UserChoice {
     public PromotablePiece(PieceType pieceType) {
         this.pieceType = pieceType;
     }
+
     @Override
     public String textValue() {
         return pieceType.name();

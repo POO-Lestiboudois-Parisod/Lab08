@@ -38,9 +38,7 @@ abstract class Piece {
 
     public int distanceX(Square square){
         int x = square.getX();
-
         int currentX = this.square.getX();
-
 
         // Calcul de la distance
         return Math.abs(x - currentX);
@@ -48,15 +46,11 @@ abstract class Piece {
 
     public int distanceY(Square square){
         int y = square.getY();
-
         int currentY = this.square.getY();
-
 
         // Calcul de la distance
         return Math.abs(y - currentY);
     }
-
-
 
     public boolean isNotSameColor(Piece piece) {
         return !this.color.equals(piece.color);
@@ -66,14 +60,11 @@ abstract class Piece {
         if(end.isOccupied()) {
             return isNotSameColor(end.getPiece());
         }
-
         return true;
-
     }
 
     public interface MoveStrategy {
         boolean isValid(Board board, Square start, Square end);
-
         void execute(Board board, Square start, Square end);
     }
 }
