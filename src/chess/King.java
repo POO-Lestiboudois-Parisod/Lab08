@@ -41,41 +41,6 @@ public class King extends SpecialFirstMovePiece implements CastlingPiece {
         return false;
     }
 
-    /*private class CastlingMove implements MoveStrategy {
-
-        @Override
-        public boolean isValid(Board board, Square start, Square end) {
-
-            int deltaX = distanceX(end);
-
-            Piece rook = board.getPiece(end.getX() < start.getX() ? 0 : 7, start.getY());
-
-            if (!(rook instanceof Rook) || !((Rook) rook).canParticipateInCastling() || deltaX != 2) {
-                return false;
-            }
-
-
-            for (int x = start.getX(); x <= rook.getSquare().getX(); ++x) {
-                if ((board.isSquareUnderAttack(board.getSquare(x, start.getY()), getColor()) && x <= end.getX()) ||
-                        board.getSquare(x, start.getY()).isOccupied()) {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        @Override
-        public void execute(Board board, Square start, Square end) {
-            Piece king = board.getPiece(start.getX(), start.getY());
-            board.movePiece(king, end);
-            Piece rook = board.getPiece(end.getX() < start.getX() ? 0 : 7, start.getY());
-            board.movePiece(rook, start);
-            board.getGameController().removePiece(rook.getSquare().getX(), rook.getSquare().getY());
-            board.getGameController().setPiece(rook, start.getX(), start.getY());
-        }
-    }*/
-
     private class CastlingMove implements MoveStrategy {
         @Override
         public boolean isValid(Board board, Square start, Square end) {
@@ -111,8 +76,8 @@ public class King extends SpecialFirstMovePiece implements CastlingPiece {
 
             board.movePiece(king, end);
             board.movePiece(rook, board.getSquare(rookDestinationX, start.getY()));
-            board.getGameController().removePiece(rook.getSquare().getX(), rook.getSquare().getY());
-            board.getGameController().setPiece(rook, start.getX(), start.getY());
+            board.getGameController().removePiece(rookX, start.getY());
+            board.getGameController().setPiece(rook.getSquare().getX(), rook.getSquare().getY());
         }
     }
 

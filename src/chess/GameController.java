@@ -47,8 +47,8 @@ public class GameController implements ChessController {
     public void removePiece(int x, int y) {
         view.removePiece(x, y);
     }
-    public void setPiece(Piece piece, int x, int y) {
-        view.putPiece(piece.getType(), piece.getColor(), x, y);
+    public void setPiece(int x, int y) {
+        view.putPiece(board.getPiece(x,y).getType(), board.getPiece(x,y).getColor(), x, y);
     }
 
     @Override
