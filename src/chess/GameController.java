@@ -26,6 +26,10 @@ public class GameController implements ChessController {
         Square fromSquare = board.getSquare(fromX, fromY);
         Square toSquare = board.getSquare(toX, toY);
 
+        if(fromSquare.getPiece() == null || (lastMove == null && fromSquare.getPiece().getColor() != PlayerColor.WHITE)||lastMove != null && !lastMove.getPiece().isNotSameColor(fromSquare.getPiece())) {
+            return false;
+        }
+
         // Vérification des conditions de déplacement
         if (fromSquare.isOccupied()) {
             Piece piece = fromSquare.getPiece();

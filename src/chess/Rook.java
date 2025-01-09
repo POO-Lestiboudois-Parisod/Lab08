@@ -40,6 +40,10 @@ public class Rook extends SpecialFirstMovePiece {
     public boolean canParticipateInCastling() {
         return !hasMoved();
     }
+    public void participatedInCastling() {
+        markAsMoved();
+    }
+
 
     // Interface pour les stratégies de mouvement
     private interface MoveStrategy {
