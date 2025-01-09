@@ -1,0 +1,10 @@
+@startuml
+
+skinparam classAttributeIconSize 0
+skinparam roundCorner 0
+skinparam linetype ortho
+
+class Pawn {
+    - private int a;
+}
+@enduml
