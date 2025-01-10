@@ -139,6 +139,15 @@ public class GameController implements ChessController {
     }
 
     /**
+     * Obtient le board.
+     *
+     * @return Board board.
+     */
+    public Board getBoard() {
+        return board;
+    }
+
+    /**
      * Démarre une nouvelle partie en réinitialisant le plateau et les pièces.
      */
     @Override
